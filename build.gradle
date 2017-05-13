@@ -9,6 +9,9 @@
 // Apply the groovy plugin to add support for Groovy
 apply plugin: 'groovy'
 
+group = 'io.gitlab.hendosdo'
+version = '0.0.0-SNAPSHOT'
+
 repositories {
     jcenter()
 }
