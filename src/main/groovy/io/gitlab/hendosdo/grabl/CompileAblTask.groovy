@@ -20,10 +20,8 @@ class CompileAblTask extends SourceTask {
 
     @TaskAction
     def compile() {
-        println 'Hello from GrablPlugin:CompileAblTask.compile'
         this.destinationDir.mkdirs()
         project.ant.PCTCompile(destDir: destinationDir.path) {
-            echo(message: 'Hello from GrablPlugin:CompileAblTask.compile:PCTCompile')
             if (this.propath && !this.propath.isEmpty()) {
                 this.propath.addToAntBuilder(delegate, 'propath')
             }
