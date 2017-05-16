@@ -38,6 +38,7 @@ class CompileAblTaskTest extends Specification {
         compile.source.isEmpty()
         compile.propath == null
         compile.dbConnections.isEmpty()
+        compile.compileArgs == [:]
     }
 
     def "compile action creates resources necessary to compile using PCT"() {
@@ -95,5 +96,25 @@ class CompileAblTaskTest extends Specification {
         //   this is done using FileCollection.addToAntBuilder but to
         //   define expected interaction on our ant mock we'd need to
         //   rely on implementation details of addToAntBuilder()
+    }
+
+    def "compiler args are passed to PCTCompile"() {
+        given: "a project with AntBuilder and an instance of CompileAblTask"
+        AntBuilder ant = GroovyMock()
+        project.ant = ant
+
+        def task = createTask()
+        task.destinationDir = project.file('destDir')
+
+        when: "compiler args are populated"
+        task.compileArgs.listing = true
+        task.compileArgs.preprocess = true
+        task.compile()
+
+        then: "PCTCompile is passed the extra args"
+        1 * ant.PCTCompile(
+            [destDir: task.destinationDir.path, listing: true, preprocess: true],
+            _ as Closure
+        )
     }
 }
