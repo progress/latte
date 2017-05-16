@@ -117,4 +117,60 @@ class CompileAblTaskTest extends Specification {
             _ as Closure
         )
     }
+
+    /**
+     * Although PCTCompile supports <resources> (which is how a FileCollection
+     * is added to AntBuilder by default), the collection created by
+     * FileCollection.addToAndBuilder does not work right - it causes e.g.
+     * 'path/to/file.p' to be received as
+     * [baseDir: 'path/to', file: 'to/file.p'] by PCT for some reason.
+     *
+     * It does seem to work a lot better when adding the collection as a
+     * FileSet so make sure this is the way it's done.
+     */
+    def "compile adds fileset resources to PCTCompile task"() {
+        given: "a project with AntBuilder, some sources and an instance of CompileAblTask"
+        AntBuilder ant = GroovyMock()
+        project.ant = ant
+
+        project.files('src', 'src/mod1', 'src/mod2').files*.mkdir()
+        project.files('src/top.p', 'src/mod1/foo.p', 'src/mod2/bar.p').
+            files*.write('')
+
+        def task = createTask()
+        task.destinationDir = project.file('destDir')
+
+        1 * ant.PCTCompile(_, _ as Closure) >> { p, Closure configClosure ->
+            println delegate
+            configClosure.delegate = ant
+            configClosure()
+            this
+        }
+
+        1 * ant.fileset([dir: project.file('src').absolutePath], _ as Closure) >> { p, Closure c ->
+            println delegate
+            c.delegate = ant; c(); this
+        }
+
+        /* when adding a FileCollection to ant as a FileSet, it gets
+         * converted to a DirectoryFileTree + PatternSet which in turn
+         * is added as an <and> node containing a series of <or> and
+         * <not> nodes containing <filename name=""> elements.
+         *
+         * That itself uses a lot of dynamic method calls and
+         * unfortunately mocking gets lost somewhere after the first
+         * <and> and not even getting the <or>s.
+         */
+//        1 * ant.and(_ as Closure) >> { Closure c ->
+//            println delegate
+//            c.delegate = ant; c(); this
+//        }
+
+        when: "compiling everything"
+        task.source('src')
+        task.compile()
+
+        then: "all expectations already setup in 'given' block"
+        true
+    }
 }

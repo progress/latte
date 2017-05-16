@@ -1,6 +1,7 @@
 package io.gitlab.hendosdo.grabl
 
 import org.gradle.api.file.FileCollection
+import org.gradle.api.file.FileCollection.AntType
 import org.gradle.api.tasks.Classpath
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Internal
@@ -30,7 +31,7 @@ class CompileAblTask extends SourceTask {
                 this.propath.addToAntBuilder(delegate, 'propath')
             }
             dbConnections.each { DBConnection(refid: it) }
-            this.source.addToAntBuilder(delegate, null)
+            this.source.addToAntBuilder(delegate, null, AntType.FileSet)
         }
     }
 }
