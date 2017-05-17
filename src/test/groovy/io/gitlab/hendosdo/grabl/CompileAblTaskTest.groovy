@@ -167,4 +167,28 @@ class CompileAblTaskTest extends Specification {
         then: "all expectations already setup in 'given' block"
         true
     }
+
+    /* OpenEdge limits the number of databases that can be connected
+     * during an OpenEdge session to 5 by default.
+     *
+     * If more are needed {@code -h NUM} option needs to be passed.
+     */
+    def "compile handles cases with >5 databases"() {
+        given: "an instance of CompileAblTask"
+        def task = createTask()
+        task.destinationDir = project.file('destDir')
+
+        1 * ant.PCTCompile(_, _ as Closure) >> { p, Closure c ->
+            c.delegate = ant; c(); this
+        }
+
+        when: "more than 5 database connections are used"
+        task.dbConnections.addAll([
+            'foodb', 'bardb', 'bazdb', 'quxdb', 'quuxdb', 'quuzdb',
+        ])
+        task.compile()
+
+        then: "option -h is automatically added to progress command"
+        1 * ant.option([name: '-h', value: '6'])
+    }
 }

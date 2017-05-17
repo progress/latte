@@ -30,7 +30,12 @@ class CompileAblTask extends SourceTask {
             if (this.propath && !this.propath.isEmpty()) {
                 this.propath.addToAntBuilder(delegate, 'propath')
             }
+
+            if (dbConnections.size() > 5) {
+                option(name: '-h', value: dbConnections.size().toString())
+            }
             dbConnections.each { DBConnection(refid: it) }
+
             this.source.addToAntBuilder(delegate, null, AntType.FileSet)
         }
     }
