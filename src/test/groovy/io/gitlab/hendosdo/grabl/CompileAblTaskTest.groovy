@@ -11,9 +11,12 @@ import spock.lang.Specification
 
 class CompileAblTaskTest extends Specification {
     Project project
+    AntBuilder ant
 
     void setup() {
         project = ProjectBuilder.builder().build()
+        ant = GroovyMock()
+        project.ant = ant
     }
 
     CompileAblTask createTask(String name = 'compileAbl') {
@@ -43,9 +46,6 @@ class CompileAblTaskTest extends Specification {
 
     def "compile action creates resources necessary to compile using PCT"() {
         given: "a project with AntBuilder and an instance of CompileAblTask"
-        AntBuilder ant = GroovyMock()
-        project.ant = ant
-
         def task = createTask()
         task.destinationDir = project.file('destDir')
 
@@ -100,9 +100,6 @@ class CompileAblTaskTest extends Specification {
 
     def "compiler args are passed to PCTCompile"() {
         given: "a project with AntBuilder and an instance of CompileAblTask"
-        AntBuilder ant = GroovyMock()
-        project.ant = ant
-
         def task = createTask()
         task.destinationDir = project.file('destDir')
 
@@ -130,9 +127,6 @@ class CompileAblTaskTest extends Specification {
      */
     def "compile adds fileset resources to PCTCompile task"() {
         given: "a project with AntBuilder, some sources and an instance of CompileAblTask"
-        AntBuilder ant = GroovyMock()
-        project.ant = ant
-
         project.files('src', 'src/mod1', 'src/mod2').files*.mkdir()
         project.files('src/top.p', 'src/mod1/foo.p', 'src/mod2/bar.p').
             files*.write('')
