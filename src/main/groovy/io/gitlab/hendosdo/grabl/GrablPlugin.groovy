@@ -12,6 +12,7 @@ class GrablPlugin implements Plugin<Project> {
         // TODO: doing this automatically on plugin application slows
         //   down tests a lot, maybe have a way to disable that?
         addPctTasksAndTypes(target)
+        addExtension(target)
 
         target.task('compileAbl', type: CompileAblTask)
         target.task('checkGrabl') {
@@ -73,5 +74,9 @@ class GrablPlugin implements Plugin<Project> {
         target.ant.typedef(resource: 'types.properties',
                            classpath: target.configurations.pct.asPath,
                            loaderRef: 'pct')
+    }
+
+    void addExtension(Project target) {
+        target.extensions.create(GrablExtension.NAME, GrablExtension, target)
     }
 }

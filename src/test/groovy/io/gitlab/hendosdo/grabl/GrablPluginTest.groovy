@@ -1,20 +1,17 @@
 package io.gitlab.hendosdo.grabl
 
-import org.junit.Before
-import org.junit.Test
-import org.spockframework.util.Matchers
-import org.gradle.testfixtures.ProjectBuilder
-import org.hamcrest.Matcher
-import org.gradle.api.DefaultTask
-import org.gradle.api.Project
-import org.gradle.api.artifacts.Dependency
-import org.gradle.api.artifacts.DependencySet
-
-import static org.hamcrest.CoreMatchers.equalTo
+import static org.hamcrest.CoreMatchers.instanceOf
 import static org.hamcrest.CoreMatchers.is
 import static org.hamcrest.CoreMatchers.not
 import static org.hamcrest.CoreMatchers.notNullValue
 import static org.junit.Assert.*
+
+import org.gradle.api.DefaultTask
+import org.gradle.api.Project
+import org.gradle.api.artifacts.DependencySet
+import org.gradle.testfixtures.ProjectBuilder
+import org.junit.Before
+import org.junit.Test
 
 
 class GrablPluginTest {
@@ -25,6 +22,11 @@ class GrablPluginTest {
         project = ProjectBuilder.builder().build()
         project.repositories { jcenter() }
         project.pluginManager.apply 'io.gitlab.hendosdo.grabl'
+    }
+
+    @Test
+    void canBeApplied() {
+        assertTrue(project.plugins.hasPlugin(GrablPlugin))
     }
 
     @Test
@@ -61,5 +63,10 @@ class GrablPluginTest {
         //   and test that it called 'taskdef' / 'typedef'
         println "ant: ${project.ant.references}"
         assertThat(project.ant.references.pct, notNullValue())
+    }
+
+    @Test
+    void addsGrablExtension() {
+        assertThat(project.abl, instanceOf(GrablExtension))
     }
 }
