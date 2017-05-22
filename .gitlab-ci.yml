@@ -1,0 +1,30 @@
+image: gradle:jre-alpine
+
+# Disable the Gradle daemon for Continuous Integration servers as correctness
+# is usually a priority over speed in CI environments.
+variables:
+    GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+# Make the gradle wrapper executable.
+before_script:
+    - chmod +x gradlew
+
+# We redirect the gradle user home using -g so that it caches the
+# wrapper and dependencies.
+# https://docs.gradle.org/current/userguide/gradle_command_line.html
+#
+# Unfortunately it also caches the build output so
+# cleaning removes reminants of any cached builds.
+# The assemble task actually builds the project.
+# If it fails here, the tests can't run.
+build:
+  stage: build
+  script:
+    - ./gradlew -g /cache/.gradle clean assemble
+  allow_failure: false
+
+# Use the generated build output to run the tests.
+test:
+  stage: test
+  script:
+    - ./gradlew -g /cache/.gradle check
