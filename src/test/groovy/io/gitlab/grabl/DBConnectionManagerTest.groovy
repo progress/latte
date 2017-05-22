@@ -1,4 +1,4 @@
-package io.gitlab.hendosdo.grabl
+package io.gitlab.grabl
 
 import org.gradle.api.AntBuilder
 import spock.lang.Specification

@@ -1,4 +1,4 @@
-package io.gitlab.hendosdo.grabl
+package io.gitlab.grabl
 
 import org.gradle.api.Project
 import org.gradle.api.Plugin

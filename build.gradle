@@ -16,7 +16,7 @@ plugins {
 // Apply the groovy plugin to add support for Groovy
 apply plugin: 'groovy'
 
-group = 'io.gitlab.hendosdo'
+group = 'io.gitlab.grabl'
 version = '0.0.0-SNAPSHOT'
 
 repositories {
@@ -37,7 +37,7 @@ gradlePlugin {
     plugins {
         grabl {
             id = "${project.group}.${project.name}"
-            implementationClass = "${project.group}.${project.name}.GrablPlugin"
+            implementationClass = "${project.group}.GrablPlugin"
         }
     }
 }

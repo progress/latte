@@ -1,4 +1,4 @@
-package io.gitlab.hendosdo.grabl
+package io.gitlab.grabl
 
 import org.gradle.api.file.FileCollection
 import org.gradle.api.file.FileCollection.AntType

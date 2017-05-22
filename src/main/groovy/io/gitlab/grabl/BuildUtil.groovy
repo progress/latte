@@ -1,4 +1,4 @@
-package io.gitlab.hendosdo.grabl
+package io.gitlab.grabl
 
 import groovy.json.JsonSlurper
 import groovy.json.JsonException

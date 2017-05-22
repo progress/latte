@@ -13,7 +13,7 @@ is done by PCT, thanks to gradle's fantastic integration with Ant.
 In your `build.gradle` add:
 
     plugins {
-        id 'io.gitlab.hendosdo.grabl' version '0.0.0-SNAPSHOT'
+        id 'io.gitlab.grabl' version '0.0.0-SNAPSHOT'
     }
 
 This will add [PCT](https://github.com/Riverside-Software/pct) tasks and types

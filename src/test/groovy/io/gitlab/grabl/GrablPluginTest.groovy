@@ -1,4 +1,4 @@
-package io.gitlab.hendosdo.grabl
+package io.gitlab.grabl
 
 import static org.hamcrest.CoreMatchers.instanceOf
 import static org.hamcrest.CoreMatchers.is
@@ -21,7 +21,7 @@ class GrablPluginTest {
     void setup() {
         project = ProjectBuilder.builder().build()
         project.repositories { jcenter() }
-        project.pluginManager.apply 'io.gitlab.hendosdo.grabl'
+        project.pluginManager.apply 'io.gitlab.grabl.grabl'
     }
 
     @Test
