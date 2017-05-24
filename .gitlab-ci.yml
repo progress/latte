@@ -15,7 +15,6 @@ cache:
     - .gradle
 
 before_script:
-  - ls -la /cache/
   - env
 
 # We redirect the gradle user home using -g so that it caches the
