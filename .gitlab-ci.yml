@@ -7,22 +7,12 @@ image: gradle:jre-alpine
 variables:
     GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     GRADLE_USER_HOME: "./.gradle"
-    GRADLE_USER_HOME_A: "$PWD/.gradle"
 
 # Default cache
 cache:
   paths:
     - .gradle
 
-before_script:
-  - env
-
-# We redirect the gradle user home using -g so that it caches the
-# wrapper and dependencies.
-# https://docs.gradle.org/current/userguide/gradle_command_line.html
-#
-# Unfortunately it also caches the build output so
-# cleaning removes reminants of any cached builds.
 # The assemble task actually builds the project.
 # If it fails here, the tests can't run.
 build:
