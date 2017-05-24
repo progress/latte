@@ -1,13 +1,22 @@
 image: gradle:jre-alpine
 
-# Disable the Gradle daemon for Continuous Integration servers as correctness
-# is usually a priority over speed in CI environments.
+# GRADLE_OPTS: Disable the Gradle daemon for Continuous Integration servers as
+#   correctness is usually a priority over speed in CI environments.
+# GRADLE_USER_HOME: redirect the gradle user home to cache the wrapper and
+#   dependencies.
 variables:
     GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+    GRADLE_USER_HOME: "./.gradle"
+    GRADLE_USER_HOME_A: "$PWD/.gradle"
 
-# Make the gradle wrapper executable.
+# Default cache
+cache:
+  paths:
+    - .gradle
+
 before_script:
-    - ls -l gradlew
+  - ls -la /cache/
+  - env
 
 # We redirect the gradle user home using -g so that it caches the
 # wrapper and dependencies.
@@ -20,11 +29,11 @@ before_script:
 build:
   stage: build
   script:
-    - ./gradlew -g /cache/.gradle clean assemble
+    - ./gradlew clean assemble
   allow_failure: false
 
 # Use the generated build output to run the tests.
 test:
   stage: test
   script:
-    - ./gradlew -g /cache/.gradle check
+    - ./gradlew check
