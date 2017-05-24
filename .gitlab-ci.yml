@@ -7,7 +7,7 @@ variables:
 
 # Make the gradle wrapper executable.
 before_script:
-    - chmod +x gradlew
+    - ls -l gradlew
 
 # We redirect the gradle user home using -g so that it caches the
 # wrapper and dependencies.
