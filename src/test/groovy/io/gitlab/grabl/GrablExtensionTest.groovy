@@ -33,4 +33,28 @@ class GrablExtensionTest extends Specification {
         then: "rcodeDir does not change"
         extension.rcodeDir == new File(project.buildDir, 'newRcode')
     }
+
+    def "it provides configuration DSL to the project"() {
+        given: "extension is added to the project"
+        project.extensions.add(GrablExtension.NAME, extension)
+
+        when: "configuration DSL is used"
+        project.configure(project) {
+            abl {
+                rcodeDir "${buildDir}/newRcode"
+                propath 'src'
+                dbConnections('foodb', 'bardb')
+                pctTaskArgs {
+                    preprocess = true
+                }
+                pctTaskArgs.listing = true
+            }
+        }
+
+        then: "values are changed"
+        extension.rcodeDir == new File(project.buildDir, 'newRcode')
+        extension.propath?.files == project.files('src').files
+        extension.dbConnections == ['foodb', 'bardb']
+        extension.pctTaskArgs == [preprocess: true, listing: true]
+    }
 }

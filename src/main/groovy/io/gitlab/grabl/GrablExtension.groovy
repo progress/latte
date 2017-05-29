@@ -64,4 +64,50 @@ class GrablExtension {
     File getRcodeDir() {
         return project.file(rcodeDir)
     }
+
+    /**
+     * Set default rcode directory
+     *
+     * The given directory will be evaluated as per
+     * {@link Project.file(Object)} on retrieval.
+     *
+     * @param rd directory to use for rcode
+     */
+    void rcodeDir(Object rd) {
+        this.rcodeDir = rd
+    }
+
+    /**
+     * Add some paths to propath of all grabl tasks
+     *
+     * The given paths will be evaluated as per
+     * {@link Project.files(Object...)}.
+     *
+     * @param paths the paths to add
+     */
+    void propath(Object... paths) {
+        this.propath = project.files(paths)
+    }
+
+    /**
+     * Add some database connection references to all grabl tasks
+     *
+     * @param dbs an iterable of names/aliases of databases to add
+     */
+    void dbConnections(String... dbs) {
+        dbConnections.addAll(dbs)
+    }
+
+    /**
+     * Configure parameters to pass to ALL PCT tasks via a closure
+     *
+     * The closure is called with its delegate set to the pctTaskArgs
+     * map which allows a handy way of setting multiple arguments, e.g.
+     * {@code pctTaskArgs { preprocess = true; listing = true }}
+     *
+     * @param cfg the closure with configuration assignments
+     */
+    void pctTaskArgs(Closure cfg) {
+        project.configure(pctTaskArgs, cfg)
+    }
 }
