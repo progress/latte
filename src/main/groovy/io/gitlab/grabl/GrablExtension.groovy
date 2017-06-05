@@ -33,7 +33,7 @@ class GrablExtension {
     /**
      * The default database connections for this project.
      */
-    List<String> dbConnections = []
+    Set<String> dbConnections = []
 
     /**
      * Default parameters to pass to ALL PCT tasks.

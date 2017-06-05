@@ -18,7 +18,7 @@ class CompileAblTask extends SourceTask {
     FileCollection propath
 
     @Input
-    List<String> dbConnections = []
+    Set<String> dbConnections = []
 
     @Internal
     Map compileArgs = [:]

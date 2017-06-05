@@ -17,7 +17,7 @@ class GrablExtensionTest extends Specification {
         extension.rcodeDir == new File(
                 project.buildDir, GrablExtension.DEFAULT_RCODE_DIR_NAME)
         extension.propath?.files == project.files('src/main/abl').files
-        extension.dbConnections == []
+        extension.dbConnections?.isEmpty()
         extension.pctTaskArgs == [:]
 
         when: "project buildDir is changed"
@@ -54,7 +54,7 @@ class GrablExtensionTest extends Specification {
         then: "values are changed"
         extension.rcodeDir == new File(project.buildDir, 'newRcode')
         extension.propath?.files == project.files('src').files
-        extension.dbConnections == ['foodb', 'bardb']
+        extension.dbConnections.containsAll(['foodb', 'bardb'])
         extension.pctTaskArgs == [preprocess: true, listing: true]
     }
 }
