@@ -1,22 +1,22 @@
 package io.gitlab.grabl
 
-import org.gradle.testfixtures.ProjectBuilder
-
-import java.nio.file.attribute.AclFileAttributeView
-
 import org.gradle.api.AntBuilder
 import org.gradle.api.Project
+import org.gradle.testfixtures.ProjectBuilder
+
 import spock.lang.Specification
 
 
 class CompileAblTaskTest extends Specification {
     Project project
     AntBuilder ant
+    CompileAblTask task
 
     void setup() {
         project = ProjectBuilder.builder().build()
         ant = GroovyMock()
         project.ant = ant
+        task = createTask()
     }
 
     CompileAblTask createTask(String name = 'compileAbl') {
@@ -25,28 +25,26 @@ class CompileAblTaskTest extends Specification {
 
     def "it can be added to a project"() {
         when: "the task is added to the project"
-        def task = project.task('compileAbl', type: CompileAblTask)
+        def compileTask = project.task('compileAblTask', type: CompileAblTask)
 
         then: "task is an instance of CompileAblTask class"
-        task instanceof CompileAblTask
+        compileTask instanceof CompileAblTask
     }
 
     def "it has default values for properties"() {
         given: "an instance of the CompileAblTask"
-        def compile = createTask()
 
         expect: "default values"
         // from AbstractCompile
-        compile.destinationDir == null
-        compile.source.isEmpty()
-        compile.propath == null
-        compile.dbConnections.isEmpty()
-        compile.compileArgs == [:]
+        task.destinationDir == null
+        task.source.isEmpty()
+        task.propath == null
+        task.dbConnections.isEmpty()
+        task.compileArgs == [:]
     }
 
     def "compile action creates resources necessary to compile using PCT"() {
-        given: "a project with AntBuilder and an instance of CompileAblTask"
-        def task = createTask()
+        given: "an instance of CompileAblTask with a set destinationDir"
         task.destinationDir = project.file('destDir')
 
         // define all expected interactions here so we don't have to repeat the
@@ -99,8 +97,7 @@ class CompileAblTaskTest extends Specification {
     }
 
     def "compiler args are passed to PCTCompile"() {
-        given: "a project with AntBuilder and an instance of CompileAblTask"
-        def task = createTask()
+        given: "an instance of CompileAblTask with a set destinationDir"
         task.destinationDir = project.file('destDir')
 
         when: "compiler args are populated"
@@ -126,12 +123,11 @@ class CompileAblTaskTest extends Specification {
      * FileSet so make sure this is the way it's done.
      */
     def "compile adds fileset resources to PCTCompile task"() {
-        given: "a project with AntBuilder, some sources and an instance of CompileAblTask"
+        given: "an instance of CompileAblTask with a set destinationDir and some sources"
         project.files('src', 'src/mod1', 'src/mod2').files*.mkdir()
         project.files('src/top.p', 'src/mod1/foo.p', 'src/mod2/bar.p').
             files*.write('')
 
-        def task = createTask()
         task.destinationDir = project.file('destDir')
 
         1 * ant.PCTCompile(_, _ as Closure) >> { p, Closure configClosure ->
@@ -174,8 +170,7 @@ class CompileAblTaskTest extends Specification {
      * If more are needed {@code -h NUM} option needs to be passed.
      */
     def "compile handles cases with >5 databases"() {
-        given: "an instance of CompileAblTask"
-        def task = createTask()
+        given: "an instance of CompileAblTask with a set destinationDir"
         task.destinationDir = project.file('destDir')
 
         1 * ant.PCTCompile(_, _ as Closure) >> { p, Closure c ->
