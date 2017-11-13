@@ -11,6 +11,7 @@
 
 plugins {
     id 'java-gradle-plugin'
+    id 'com.gradle.plugin-publish' version '0.9.9'
 }
 
 // Apply the groovy plugin to add support for Groovy
@@ -33,11 +34,61 @@ dependencies {
     testCompile 'net.bytebuddy:byte-buddy:1.6.9'
 }
 
-gradlePlugin {
-    plugins {
-        grabl {
-            id = "${project.group}.${project.name}"
-            implementationClass = "${project.group}.GrablPlugin"
+
+// Configure development and publishing helper plugins
+// Inspired by: https://github.com/gradle/kotlin-dsl/blob/master/plugins/build.gradle.kts
+
+class GradlePluginMetaData {
+    String name
+    String displayName
+    String id
+    String implementationClass
+
+    GradlePluginMetaData(String name, String displayName, String id, String implementationClass) {
+        this.name = name
+        this.displayName = displayName
+        this.id = id
+        this.implementationClass = implementationClass
+    }
+}
+
+def pluginList = [
+    new GradlePluginMetaData(
+        project.name,
+        'A Gradle plugin for ABL based on PCT',
+        "${project.group}.${project.name}",
+        "${project.group}.GrablPlugin"
+    )
+]
+
+pluginBundle {
+    website = 'https://gitlab.com/grabl/grabl'
+    vcsUrl = 'https://gitlab.com/grabl/grabl'
+    tags = ['abl', 'pct']
+}
+
+pluginList.each { plugin ->
+    // Configuration for the `java-gradle-plugin` plugin
+    // https://docs.gradle.org/4.3.1/userguide/javaGradle_plugin.html
+    gradlePlugin {
+        plugins {
+            create(plugin.id) {
+                id = plugin.id
+                implementationClass = plugin.implementationClass
+            }
+        }
+    }
+
+    // Configuration for the `com.gradle.plugin-publish` plugin
+    // https://plugins.gradle.org/docs/publish-plugin
+    // https://guides.gradle.org/publishing-plugins-to-gradle-plugin-portal/
+    pluginBundle {
+        plugins {
+            create(plugin.id) {
+                id = plugin.id
+                displayName = plugin.displayName
+                description = plugin.displayName
+            }
         }
     }
 }
