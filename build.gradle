@@ -12,13 +12,13 @@
 plugins {
     id 'java-gradle-plugin'
     id 'com.gradle.plugin-publish' version '0.9.9'
+    id 'nebula.release' version '6.1.0'
 }
 
 // Apply the groovy plugin to add support for Groovy
 apply plugin: 'groovy'
 
 group = 'io.gitlab.grabl'
-version = '0.0.0-SNAPSHOT'
 
 repositories {
     jcenter()
@@ -92,3 +92,5 @@ pluginList.each { plugin ->
         }
     }
 }
+
+postRelease.dependsOn(publishPlugins)
