@@ -68,12 +68,14 @@ class GrablPlugin implements Plugin<Project> {
     }
 
     void addPctTasksAndTypes(Project target) {
-        target.ant.taskdef(resource: 'PCT.properties',
-                           classpath: target.configurations.pct.asPath,
-                           loaderRef: 'pct')
-        target.ant.typedef(resource: 'types.properties',
-                           classpath: target.configurations.pct.asPath,
-                           loaderRef: 'pct')
+        target.afterEvaluate { project ->
+            project.ant.taskdef(resource: 'PCT.properties',
+                                classpath: target.configurations.pct.asPath,
+                                loaderRef: 'pct')
+            project.ant.typedef(resource: 'types.properties',
+                                classpath: target.configurations.pct.asPath,
+                                loaderRef: 'pct')
+        }
     }
 
     void addExtension(Project target) {

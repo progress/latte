@@ -1,5 +1,7 @@
 package io.gitlab.grabl
 
+import org.gradle.api.artifacts.Configuration
+
 import static org.hamcrest.CoreMatchers.instanceOf
 import static org.hamcrest.CoreMatchers.is
 import static org.hamcrest.CoreMatchers.not
@@ -38,6 +40,16 @@ class GrablPluginTest {
     @Test
     void addsPctConfiguration() {
         assertThat(project.configurations.pct, notNullValue())
+
+        /* Ensure configuration is added but not resolved eagerly as
+         * this can cause problems where it will be unable to download
+         * dependencies for PCT as repositories may not be configured
+         * at that point (see #10).
+         */
+        assertEquals(
+                Configuration.State.UNRESOLVED,
+                project.configurations.pct.state
+        )
     }
 
     @Test
@@ -61,7 +73,10 @@ class GrablPluginTest {
         //   the 'loaderRef' with value of the class loader used to
         //   load the tasks/types; alternatively just mock AntBuilder
         //   and test that it called 'taskdef' / 'typedef'
-        println "ant: ${project.ant.references}"
+        // NOTE: `project.evaluate` is internal but there is currently
+        //   no better supported way to trigger lifecycle events like
+        //   `project.afterEvaluate` from tests
+        project.evaluate()
         assertThat(project.ant.references.pct, notNullValue())
     }
 
