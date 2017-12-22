@@ -123,6 +123,7 @@ buildScanRecipes {
     )
     recipe('remote',
             url: 'https://github.com/gimoh/gradle-buildscan-recipes/raw/db00372f75de5274cb224c8b97fb795cc999543a/src/recipes/grgit.groovy',
-            cache: true
+            cache: true,
+            baseUrl: "$vcsBaseUrl/commit"
     )
 }
