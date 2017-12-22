@@ -117,14 +117,12 @@ buildScan {
 }
 
 buildScanRecipes {
-    recipe 'git-commit', baseUrl: "$vcsBaseUrl/commit"
-    recipes 'git-status', 'gc-stats'
-
     recipe('remote',
-            url: "https://github.com/eskatos/gradle-buildscan-recipes/raw/a1e7dac6385148377c7a246a4372646d6e41a8ae/src/recipes/git-branch.groovy",
+            url: 'https://github.com/gimoh/gradle-buildscan-recipes/raw/8aa60659273e695bb69e5adf79072464fe6543e8/src/recipes/gitlab-ci.groovy',
             cache: true
     )
     recipe('remote',
-            url: "https://github.com/gimoh/gradle-buildscan-recipes/raw/gitlab-ci/src/recipes/gitlab-ci.groovy"
+            url: 'https://github.com/gimoh/gradle-buildscan-recipes/raw/db00372f75de5274cb224c8b97fb795cc999543a/src/recipes/grgit.groovy',
+            cache: true
     )
 }
