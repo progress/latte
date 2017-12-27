@@ -1,5 +1,22 @@
 # Development
 
+## Branch Names
+
+Everything you work on should have an issue in
+[GitLab](https://gitlab.com/grabl/grabl/issues).
+
+The git branch name:
+
+1. can be prefixed with issue type, e.g.: `bug/`, `chore/`, `feature-`
+   or `refacor-` (either `/` or `-` is allowed)
+1. should start with the issue ID, e.g.: `13-`
+
+Building snapshots relies on this convention to produce build metadata
+that is included in version string that allows identifying the source
+that produced the given build. For example, given branch name
+`bug/13-devSnapshot-versions-generated-by-nebula-release-are-incompatible-with-plugin-portal`
+it could produce a devSnapshot version like `0.1.0-dev+13.dfc09a7`.
+
 # Release Management
 
 This plugin uses
