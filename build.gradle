@@ -134,7 +134,7 @@ release {
 }
 
 nebulaRelease {
-    shortenedBranchPattern = /(?:(?:bug|chore|feature|refactor|release)(?:-|\/))?(\d+)/
+    shortenedBranchPattern = /(?:(?:bug|chore|feature|refactor|release)(?:-|\/))?((?:\d+|.*))/
 }
 
 // Configure build-scans
