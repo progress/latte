@@ -25,3 +25,29 @@ to your project by:
  - adding dependency on PCT 207
  - adding dependency on Google gson 2.8.0 which is required by PCT ABLUnit task
  - loading PCT Ant tasks and types into AntBuilder using loader ref _pct_
+
+## Base Plugin ##
+
+The plugin is split into base and convention plugins.
+
+The base plugin (`grabl-base`) only provides **capability**, i.e.
+building blocks - the extension, task types, etc. for building ABL
+projects.
+
+The **convention** plugin (`grabl`) provides sensible defaults and task
+instances so a project that follows the convention can be built with
+not much more than the application of the plugin in `build.gradle`.
+
+If you want to provide your own task instances you can apply only the
+base plugin and your own configuration:
+
+```groovy
+plugins {
+    id 'io.gitlab.grabl.grabl-base' version '0.0.0'
+}
+
+task compileAbl(type: CompileAblTask) {
+    destinationDir = file('output')
+    source = fileTree(dir: 'src', include: '**/*.p')
+}
+```
