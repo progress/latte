@@ -60,6 +60,12 @@ class GradlePluginMetaData {
 
 def pluginList = [
     new GradlePluginMetaData(
+        "${project.name}-base",
+        'A Gradle base plugin for ABL based on PCT',
+        "${project.group}.${project.name}-base",
+        "${project.group}.GrablBasePlugin"
+    ),
+    new GradlePluginMetaData(
         project.name,
         'A Gradle plugin for ABL based on PCT',
         "${project.group}.${project.name}",
