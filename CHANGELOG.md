@@ -5,8 +5,35 @@ The format is inspired by
 and [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).  This project
 adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+
+v0.1.0 / 2017-12-29
+===================
+
+See [grabl/grabl%"v0.1.0"](https://gitlab.com/grabl/grabl/milestones/2).
+
+Added
+-----
+
+  * Add support for build scans
+
+Changed
+-------
+
+  * Split plugin into base and convention
+  * Upgrade gradle wrapper to 4.4.1
+
+Fixed
+-----
+
+  * Make sure release runs before publishing
+  * Configure nebula.release to produce versions compatible with Gradle
+    Plugin Portal
+  * Avoid eagerly resolving `pct` configuration
+
 v0.0.0 / 2017-11-22
 ===================
+
+See [grabl/grabl%"v0.0.0"](https://gitlab.com/grabl/grabl/milestones/1).
 
 Added
 -----
