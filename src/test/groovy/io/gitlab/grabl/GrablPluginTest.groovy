@@ -6,6 +6,8 @@ import org.gradle.testfixtures.ProjectBuilder
 import org.junit.Before
 import org.junit.Test
 
+import static org.hamcrest.CoreMatchers.instanceOf
+import static org.junit.Assert.assertThat
 import static org.junit.Assert.assertTrue
 
 class GrablPluginTest {
@@ -28,8 +30,8 @@ class GrablPluginTest {
     }
 
     @Test
-    public void grablPluginAddsTasksToProject() {
-        assertTrue(project.tasks.compileAbl instanceof CompileAblTask)
-        assertTrue(project.tasks.checkGrabl instanceof DefaultTask)
+    void addsTasksToProject() {
+        assertThat(project.tasks.compileAbl, instanceOf(CompileAblTask))
+        assertThat(project.tasks.checkGrabl, instanceOf(DefaultTask))
     }
 }
