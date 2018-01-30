@@ -1,7 +1,7 @@
 # Grabl #
 
 [Gradle](https://gradle.org/) +
-[(OpenEdge) ABL](https://www.progress.com/openedge) = [grabl][] (using
+[(OpenEdge) ABL](https://www.progress.com/openedge) = [grabl][] (powered-by
 [Riverside-Software PCT](https://github.com/Riverside-Software/pct))
 
 [Grabl] is a plugin for Gradle for working with OpenEdge ABL.  It
