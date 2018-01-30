@@ -1,12 +1,13 @@
 # Grabl #
 
 [Gradle](https://gradle.org/) +
-[(OpenEdge) ABL](https://www.progress.com/openedge) = grabl (using
+[(OpenEdge) ABL](https://www.progress.com/openedge) = [grabl][] (using
 [Riverside-Software PCT](https://github.com/Riverside-Software/pct))
 
-Grabl is a plugin for Gradle for working with OpenEdge ABL.  It provides gradle
-tasks to compile ABL code and run unit tests using ABLUnit.  All the hard work
-is done by PCT, thanks to gradle's fantastic integration with Ant.
+[Grabl] is a plugin for Gradle for working with OpenEdge ABL.  It
+provides gradle tasks to compile ABL code and run unit tests using
+ABLUnit.  All the hard work is done by PCT, thanks to gradle's
+fantastic integration with Ant.
 
 ## Usage ##
 
@@ -25,6 +26,13 @@ to your project by:
  - adding dependency on PCT 207
  - adding dependency on Google gson 2.8.0 which is required by PCT ABLUnit task
  - loading PCT Ant tasks and types into AntBuilder using loader ref _pct_
+
+## Links ##
+
+- [Home Page][grabl]
+- [Plugin Portal](https://plugins.gradle.org/plugin/io.gitlab.grabl.grabl)
+- [Plugin Portal (base)](https://plugins.gradle.org/plugin/io.gitlab.grabl.grabl-base)
+- [Examples Repo](https://gitlab.com/grabl/grabl-samples)
 
 ## Base Plugin ##
 
@@ -51,3 +59,6 @@ task compileAbl(type: CompileAblTask) {
     source = fileTree(dir: 'src', include: '**/*.p')
 }
 ```
+
+
+[grabl]: https://grabl.gitlab.io/
