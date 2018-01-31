@@ -13,9 +13,11 @@ fantastic integration with Ant.
 
 In your `build.gradle` add:
 
-    plugins {
-        id 'io.gitlab.grabl' version '0.0.0-SNAPSHOT'
-    }
+``` groovy
+plugins {
+  id "io.gitlab.grabl.grabl" version "0.1.0"
+}
+```
 
 This will add [PCT](https://github.com/Riverside-Software/pct) tasks and types
 to your project by:
