@@ -36,31 +36,5 @@ to your project by:
 - [Plugin Portal (base)](https://plugins.gradle.org/plugin/io.gitlab.grabl.grabl-base)
 - [Examples Repo](https://gitlab.com/grabl/grabl-samples)
 
-## Base Plugin ##
-
-The plugin is split into base and convention plugins.
-
-The base plugin (`grabl-base`) only provides **capability**, i.e.
-building blocks - the extension, task types, etc. for building ABL
-projects.
-
-The **convention** plugin (`grabl`) provides sensible defaults and task
-instances so a project that follows the convention can be built with
-not much more than the application of the plugin in `build.gradle`.
-
-If you want to provide your own task instances you can apply only the
-base plugin and your own configuration:
-
-```groovy
-plugins {
-    id 'io.gitlab.grabl.grabl-base' version '0.0.0'
-}
-
-task compileAbl(type: CompileAblTask) {
-    destinationDir = file('output')
-    source = fileTree(dir: 'src', include: '**/*.p')
-}
-```
-
 
 [grabl]: https://grabl.gitlab.io/
