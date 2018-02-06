@@ -1,9 +1,17 @@
 # Development
 
+## Proposing Changes
+
+Changes should be proposed on the [issue tracker][issues] and discussed
+there to flesh out the approach.
+
+If you want to work on one of the existing [issues][], please drop a
+comment there to make sure nobody else is working on it and for any
+discussion about the details.
+
 ## Branch Names
 
-Everything you work on should have an issue in
-[GitLab](https://gitlab.com/grabl/grabl/issues).
+Everything you work on should have an issue in [GitLab][issues].
 
 The git branch name:
 
@@ -41,3 +49,6 @@ so publishing is as simple as:
 ```
 
 See also [Plugin Publishing Guide](https://guides.gradle.org/publishing-plugins-to-gradle-plugin-portal/)
+
+
+[issues]: https://gitlab.com/grabl/grabl/issues
