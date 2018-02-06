@@ -61,21 +61,21 @@ class GradlePluginMetaData {
 def pluginList = [
     new GradlePluginMetaData(
         "${project.name}-base",
-        'A Gradle base plugin for ABL based on PCT',
+        'A Gradle base plugin for ABL language support based on PCT',
         "${project.group}.${project.name}-base",
         "${project.group}.GrablBasePlugin"
     ),
     new GradlePluginMetaData(
         project.name,
-        'A Gradle plugin for ABL based on PCT',
+        'A Gradle plugin for ABL language support based on PCT',
         "${project.group}.${project.name}",
         "${project.group}.GrablPlugin"
     )
 ]
 
 pluginBundle {
-    website = 'https://gitlab.com/grabl/grabl'
-    vcsUrl = 'https://gitlab.com/grabl/grabl'
+    website = 'https://grabl.gitlab.io/'
+    vcsUrl = vcsBaseUrl
     tags = ['abl', 'pct']
 }
 
