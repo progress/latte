@@ -52,8 +52,8 @@ pages:
   script:
     - test ! -d public || mv public .public
     - mkdir public
-    - mv build/docs/groovydoc pages/api
-    - mv build/reports pages/
+    - mv build/docs/groovydoc public/api
+    - mv build/reports public/
   artifacts:
     paths:
       - public
