@@ -50,8 +50,8 @@ pages:
     - apidocs
     - test
   script:
-    - test ! -d pages || mv pages .pages
-    - mkdir pages
+    - test ! -d public || mv public .public
+    - mkdir public
     - mv build/docs/groovydoc pages/api
     - mv build/reports pages/
   artifacts:
