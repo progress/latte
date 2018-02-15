@@ -15,6 +15,7 @@ plugins {
     id 'java-gradle-plugin'
     id 'com.gradle.plugin-publish' version '0.9.9'
     id 'nebula.release' version '6.1.0'
+    id 'com.bmuschko.clover' version '2.2.0'
 }
 
 // Apply the groovy plugin to add support for Groovy
@@ -31,6 +32,8 @@ repositories {
 }
 
 dependencies {
+    clover 'org.openclover:clover:4.2.0'
+
     // Use the awesome Spock testing and specification framework
     testCompile('org.spockframework:spock-core:1.1-groovy-2.4-rc-4') {
         exclude module: 'groovy-all'
@@ -40,6 +43,17 @@ dependencies {
     testCompile 'net.bytebuddy:byte-buddy:1.6.9'
 }
 
+
+// Configure OpenClover coverage plugin
+// https://github.com/bmuschko/gradle-clover-plugin/blob/master/README.md
+
+clover {
+    targetPercentage = '90%'
+
+    report {
+        html = true
+    }
+}
 
 // Configure development and publishing helper plugins
 // Inspired by: https://github.com/gradle/kotlin-dsl/blob/master/plugins/build.gradle.kts
