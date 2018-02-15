@@ -55,6 +55,16 @@ clover {
     }
 }
 
+cloverGenerateReport.doLast {
+    // display results so GitLab can parse to provide a badge
+    // http://openclover.org/doc/manual/4.2.0/ant--clover-log.html
+    ant.lifecycleLogLevel = 'INFO'
+    ant."clover-log"(initString: "$project.buildDir/${getInitString()}")
+}
+
+check.dependsOn(cloverGenerateReport)
+cloverGenerateReport.mustRunAfter(test)
+
 // Configure development and publishing helper plugins
 // Inspired by: https://github.com/gradle/kotlin-dsl/blob/master/plugins/build.gradle.kts
 
