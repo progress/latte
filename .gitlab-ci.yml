@@ -35,6 +35,7 @@ apidocs:
 
 # Use the generated build output to run the tests.
 test:
+  image: openjdk:8-jdk
   stage: test
   script:
     - ./gradlew check
