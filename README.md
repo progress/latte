@@ -1,4 +1,4 @@
-[![pipeline status][pipeline-img]][pipeline-target]
+[![pipeline status][pipeline-img]][pipeline-target] [![coverage report][coverage-img]][coverage-target]
 
 # Grabl #
 
@@ -65,5 +65,7 @@ grabl is free and open-source software licensed under the
 [hacking]: HACKING.md
 [pipeline-img]: https://gitlab.com/grabl/grabl/badges/master/pipeline.svg
 [pipeline-target]: https://gitlab.com/grabl/grabl/commits/master
+[coverage-img]: https://gitlab.com/grabl/grabl/badges/master/coverage.svg
+[coverage-target]: https://grabl.gitlab.io/grabl/reports/clover/html/
 [grportal-grabl]: https://plugins.gradle.org/plugin/io.gitlab.grabl.grabl
 [grportal-grabl-base]: https://plugins.gradle.org/plugin/io.gitlab.grabl.grabl-base
