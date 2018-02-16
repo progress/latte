@@ -1,4 +1,4 @@
-image: gradle:jre-alpine
+image: openjdk:8-jdk
 
 # GRADLE_OPTS: Disable the Gradle daemon for Continuous Integration servers as
 #   correctness is usually a priority over speed in CI environments.
@@ -35,7 +35,6 @@ apidocs:
 
 # Use the generated build output to run the tests.
 test:
-  image: openjdk:8-jdk
   stage: test
   script:
     - ./gradlew check
