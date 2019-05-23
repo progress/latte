@@ -13,9 +13,9 @@ plugins {
     id 'com.gradle.build-scan' version '2.3'
     id 'me.champeau.buildscan-recipes' version '0.2.3'
     id 'java-gradle-plugin'
-    id 'com.gradle.plugin-publish' version '0.9.9'
+    id 'com.gradle.plugin-publish' version '0.10.1'
     id 'nebula.release' version '6.3.5'
-    id "com.bmuschko.clover" version "2.2.3"
+    id 'com.bmuschko.clover' version '2.2.3'
 }
 
 // Apply the groovy plugin to add support for Groovy
