@@ -38,9 +38,9 @@ class GrablBasePluginTest extends Specification {
         Configuration.State.UNRESOLVED == project.configurations.pct.state
     }
 
-    def 'adds rssw repository'() {
+    def 'adds maven central repository'() {
         expect:
-        null != project.repositories.rssw
+        null != project.repositories.maven
     }
 
     def 'adds dependency on PCT'() {
@@ -49,7 +49,7 @@ class GrablBasePluginTest extends Specification {
 
         expect:
         deps.size() > 0
-        deps.findAll { it.name == 'PCT' }.size() == 1
+        deps.findAll { it.name == 'pct' }.size() == 1
     }
 
     def 'adds PCT Ant tasks and types'() {
