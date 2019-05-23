@@ -103,6 +103,7 @@ pluginBundle {
     tags = ['abl', 'pct']
 }
 
+
 pluginList.each { plugin ->
     // Configuration for the `java-gradle-plugin` plugin
     // https://docs.gradle.org/4.3.1/userguide/javaGradle_plugin.html
@@ -115,18 +116,6 @@ pluginList.each { plugin ->
         }
     }
 
-    // Configuration for the `com.gradle.plugin-publish` plugin
-    // https://plugins.gradle.org/docs/publish-plugin
-    // https://guides.gradle.org/publishing-plugins-to-gradle-plugin-portal/
-    pluginBundle {
-        plugins {
-            create(plugin.id) {
-                id = plugin.id
-                displayName = plugin.displayName
-                description = plugin.displayName
-            }
-        }
-    }
 }
 
 postRelease.dependsOn(publishPlugins)
