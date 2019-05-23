@@ -22,7 +22,7 @@ plugins {
 group = 'io.gitlab.grabl'
 
 ext {
-    vcsBaseUrl = 'https://gitlab.com/dambenso/Progress-Grabl'
+    vcsBaseUrl = 'https://github.com/dambenso/Progress-Grabl'
 }
 
 repositories {
