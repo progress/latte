@@ -10,12 +10,12 @@
  */
 
 plugins {
-    id 'com.gradle.build-scan' version '1.11'
+    id 'com.gradle.build-scan' version '2.3'
     id 'me.champeau.buildscan-recipes' version '0.2.3'
     id 'java-gradle-plugin'
     id 'com.gradle.plugin-publish' version '0.9.9'
-    id 'nebula.release' version '6.1.0'
-    id 'com.bmuschko.clover' version '2.2.0'
+    id 'nebula.release' version '6.3.5'
+    id "com.bmuschko.clover" version "2.2.3"
 }
 
 // Apply the groovy plugin to add support for Groovy
@@ -24,7 +24,7 @@ apply plugin: 'groovy'
 group = 'io.gitlab.grabl'
 
 ext {
-    vcsBaseUrl = 'https://gitlab.com/grabl/grabl'
+    vcsBaseUrl = 'https://gitlab.com/dambenso/Progress-Grabl'
 }
 
 repositories {
@@ -32,7 +32,7 @@ repositories {
 }
 
 dependencies {
-    clover 'org.openclover:clover:4.2.0'
+    clover 'org.openclover:clover:4.3.1'
 
     // Use the awesome Spock testing and specification framework
     testCompile('org.spockframework:spock-core:1.1-groovy-2.4-rc-4') {
@@ -172,8 +172,6 @@ nebulaRelease {
 // https://docs.gradle.com/build-scan-plugin/
 
 buildScan {
-    licenseAgreementUrl = 'https://gradle.com/terms-of-service'
-    licenseAgree = 'yes'
 
     if (System.getenv('CI')) {
         publishAlways()
