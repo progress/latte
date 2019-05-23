@@ -40,7 +40,7 @@ dependencies {
     }
     testCompile 'junit:junit:4.12'
     // required by spock for mocking classes
-    testCompile 'net.bytebuddy:byte-buddy:1.6.9'
+    testCompile 'net.bytebuddy:byte-buddy:1.9.12'
 }
 
 
@@ -98,7 +98,7 @@ def pluginList = [
 ]
 
 pluginBundle {
-    website = 'https://grabl.gitlab.io/'
+    website = 'https://github.com/dambenso/Progress-Grabl'
     vcsUrl = vcsBaseUrl
     tags = ['abl', 'pct']
 }
