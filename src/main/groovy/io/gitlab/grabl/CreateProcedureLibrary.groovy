@@ -19,7 +19,7 @@ class CreateProcedureLibrary extends DefaultTask {
     String encoding = null
 
     @Input @Optional
-    
+    boolean noCompress = null
 
     @Input @Optional
     String cpInternal = null
@@ -32,7 +32,25 @@ class CreateProcedureLibrary extends DefaultTask {
 
     @Input @Optional
     String cpColl = null
+  
+    @Input @Optional
+    String basedir = null
+    
+    @Input @Optional
+    String includes = null
 
+    @Input @Optional
+    String includesFile = null
+
+    @Input @Optional
+    String excludes = null
+
+    @Input @Optional
+    String excludesFile = null
+
+    @Input @Optional
+    boolean defaultExcludes = null
+  
     @TaskAction
     def createDB() {
         Map args = [:]
@@ -41,17 +59,26 @@ class CreateProcedureLibrary extends DefaultTask {
             new File(destFile).mkdirs()
         }
 
-        args.put('destFile', destFile)          
+        args.put('destFile', destFile)
+        args.put('sharedFile', sharedFile)
+        args.put('encoding', encoding)
+        args.put('noCompress', noCompress)
         args.put('cpInternal', cpInternal)
         args.put('cpStream', cpStream)
         args.put('cpCase', cpCase)
         args.put('cpColl', cpColl)
+        args.put('basedir', basedir)
+        args.put('includes', includes)
+        args.put('includesFile', includesFile)
+        args.put('excludes', excludes)
+        args.put('excludesFile', excludesFile)
+        args.put('defaultExcludes', defaultExcludes)
         
         // Sort out all the nulls since we wanna leave the defaults to PCT
         def tmp = args.findAll { it.value }
 
         // This is shorthand for something like:
-        //   ant.PCTLibrary(destFile: dbDir, dbName: 'testfoo', largeFiles: true)
+        //   ant.PCTLibrary(destFile: dbDir, indludes: 'testfoo', noCompress: true)
         // but we use the spread map operator in groovy.
         ant.PCTLibrary(*:tmp)
     }
