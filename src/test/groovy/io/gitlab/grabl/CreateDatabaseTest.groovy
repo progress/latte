@@ -41,7 +41,7 @@ class CreateDatabaseTest extends Specification {
         when: "task properties are changed"
         task.dbName = "testfoo.db"
 
-        then: "extension properties are not affected"
+        then: "task properties reflect that change"
         task.dbName == "testfoo.db"
     }
 
