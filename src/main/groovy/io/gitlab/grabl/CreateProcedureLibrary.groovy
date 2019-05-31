@@ -52,7 +52,7 @@ class CreateProcedureLibrary extends DefaultTask {
     boolean defaultExcludes = null
   
     @TaskAction
-    def createDB() {
+    def createPL() {
         Map args = [:]
 
         args.put('destFile', destFile)
@@ -74,7 +74,7 @@ class CreateProcedureLibrary extends DefaultTask {
         def tmp = args.findAll { it.value }
 
         // This is shorthand for something like:
-        //   ant.PCTLibrary(destFile: dbDir, indludes: 'testfoo', noCompress: true)
+        //   ant.PCTLibrary(destFile: mylib.pl, includes: 'testfoo.p', noCompress: true)
         // but we use the spread map operator in groovy.
         ant.PCTLibrary(*:tmp)
     }
