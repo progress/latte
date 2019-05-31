@@ -28,7 +28,7 @@ class CreateDatabase extends DefaultTask {
     int blockSize = 0
 
     @Input @Optional
-    boolean noInit = null
+    Boolean noInit = null
 
     @Input @Optional
     String codepage = null
@@ -37,10 +37,10 @@ class CreateDatabase extends DefaultTask {
     String wordRules = null
 
     @Input @Optional
-    boolean multiTenant = null
+    Boolean multiTenant = null
 
     @Input @Optional
-    boolean failOnError = null
+    Boolean failOnError = null
 
     @Input @Optional
     String collation = null
@@ -61,16 +61,16 @@ class CreateDatabase extends DefaultTask {
     String cpColl = null
 
     @Input @Optional
-    boolean newInstance = null 
+    Boolean newInstance = null 
 
     @Input @Optional
-    boolean largeFiles = null
+    Boolean largeFiles = null
 
     @Input @Optional
-    boolean relative = null 
+    Boolean relative = null 
         
     @Input @Optional
-    boolean auditing = null 
+    Boolean auditing = null 
 
     @Input @Optional
     String auditArea = null
@@ -110,8 +110,11 @@ class CreateDatabase extends DefaultTask {
         args.put('auditArea', auditArea)
         args.put('auditIndexArea', auditIndexArea)
 
+        println newInstance
+        println args
+
         // Sort out all the nulls since we wanna leave the defaults to PCT
-        def tmp = args.findAll { it.value }
+        def tmp = args.findAll { it.value != null }
 
         // This is shorthand for something like:
         //   ant.PCTCreateBase(destDir: dbDir, dbName: 'testfoo', largeFiles: true)

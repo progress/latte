@@ -19,7 +19,7 @@ class CreateProcedureLibrary extends DefaultTask {
     String encoding = null
 
     @Input @Optional
-    boolean noCompress = null
+    Boolean noCompress = null
 
     @Input @Optional
     String cpInternal = null
@@ -49,7 +49,7 @@ class CreateProcedureLibrary extends DefaultTask {
     String excludesFile = null
 
     @Input @Optional
-    boolean defaultExcludes = null
+    Boolean defaultExcludes = null
   
     @TaskAction
     def createPL() {
@@ -69,9 +69,9 @@ class CreateProcedureLibrary extends DefaultTask {
         args.put('excludes', excludes)
         args.put('excludesFile', excludesFile)
         args.put('defaultExcludes', defaultExcludes)
-        
+
         // Sort out all the nulls since we wanna leave the defaults to PCT
-        def tmp = args.findAll { it.value }
+        def tmp = args.findAll { it.value != null }
 
         // This is shorthand for something like:
         //   ant.PCTLibrary(destFile: mylib.pl, includes: 'testfoo.p', noCompress: true)

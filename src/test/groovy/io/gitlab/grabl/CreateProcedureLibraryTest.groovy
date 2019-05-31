@@ -63,7 +63,7 @@ class CreateProcedureLibraryTest extends Specification {
         task.cpStream = 'UTF-8'
         
         when: "a PL is created"
-        taskPL()
+        task.createPL()
 
         then: "PCTLibrary should be called"
         1 *  ant.PCTLibrary([
