@@ -47,7 +47,7 @@ class CreateProcedureLibraryTest extends Specification {
         task.defaultExcludes = true
 
         then: "task properties reflect that change"
-        task.destFile = "myPL.pl"
+        task.destFile == "myPL.pl"
         task.encoding == "testEncoding"
         task.noCompress == false
         task.basedir == "src"
