@@ -55,10 +55,6 @@ class CreateProcedureLibrary extends DefaultTask {
     def createDB() {
         Map args = [:]
 
-        if (destFile) {
-            new File(destFile).mkdirs()
-        }
-
         args.put('destFile', destFile)
         args.put('sharedFile', sharedFile)
         args.put('encoding', encoding)
