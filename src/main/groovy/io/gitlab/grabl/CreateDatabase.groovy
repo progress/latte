@@ -110,9 +110,6 @@ class CreateDatabase extends DefaultTask {
         args.put('auditArea', auditArea)
         args.put('auditIndexArea', auditIndexArea)
 
-        println newInstance
-        println args
-
         // Sort out all the nulls since we wanna leave the defaults to PCT
         def tmp = args.findAll { it.value != null }
 
