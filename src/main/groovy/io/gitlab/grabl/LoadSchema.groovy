@@ -11,13 +11,13 @@ class LoadSchema extends DefaultTask {
     String srcFile
 
     @Input @Optional
-    boolean unfreeze = false
+    Boolean unfreeze = false
 
     @Input @Optional
-    boolean onlineChanges = false
+    Boolean onlineChanges = false
 
     @Input @Optional
-    boolean commitWhenErrors = false
+    Boolean commitWhenErrors = false
 
     @Input @Optional
     String callbackClass = null
@@ -32,9 +32,9 @@ class LoadSchema extends DefaultTask {
         args.put('commitWhenErrors', commitWhenErrors)
         args.put('callbackClass', callbackClass)
 
-        def inpParam = args.findAll {it.value}
+        def inpParam = args.findAll {it.value != null}
 
-        ant.PCant.PCTLoadSchema(*:inpParam)
+        ant.PCTLoadSchema(*:inpParam)
     }
 
      protected GrablExtension getExt() {
