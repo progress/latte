@@ -54,7 +54,7 @@ class DBConnection extends DefaultTask {
     String id = null
 
     @TaskAction
-    def loadSchema() {
+    def connect() {
         Map args =[:]
 
         args.put('dbName', dbName)
