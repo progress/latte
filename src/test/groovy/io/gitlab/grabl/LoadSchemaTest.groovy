@@ -48,6 +48,8 @@ class LoadSchemaTest extends Specification {
         then: "task properties reflect that change"
         task.unfreeze == false
         task.callbackClass == 'fakeClass'
+
+        println "Source: ${task.source.getFiles()}"
         task.source.getFiles().size() == 2
         task.source.getFiles().toArray()[0].getName().contains("delta1.df")
         task.source.getFiles().toArray()[1].getName().contains("delta2.df")
