@@ -23,7 +23,7 @@ class DBConnectionTest extends Specification {
         task = createTask()
     }
 
-    DBConnection createTask(String name = 'DBConnection1') {
+    DBConnection createTask(String name = 'connectDB') {
         project.task(name, type: DBConnection)
     }
 
@@ -31,7 +31,7 @@ class DBConnectionTest extends Specification {
         when: "the task is added to the project"
         def connectTask = project.task('DBConnection', type: DBConnection)
 
-        then: "task is an instance of DBConnection1 class"
+        then: "task is an instance of DBConnection class"
         connectTask instanceof DBConnection
     }
 
@@ -44,13 +44,11 @@ class DBConnectionTest extends Specification {
         task.id = "foodb"
         task.singleUser = true
        
-
         then: "task properties reflect that change"
         task.dbName == "sports2020"
         task.dbDir == "testdb/"
         task.id == "foodb"
         task.singleUser == true
-
     }
 
     def "creates a dbconnection with the given options"() {
@@ -63,7 +61,7 @@ class DBConnectionTest extends Specification {
         when: "a db connection is created"
         task.connect()
 
-        then: "DBConnection1 should be called"
+        then: "ant.DBConnection should be called"
         1 *  ant.DBConnection([
             dbName: "sports2020",
             dbDir: "testdb/",
