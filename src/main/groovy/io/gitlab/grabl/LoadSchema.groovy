@@ -13,13 +13,13 @@ class LoadSchema extends SourceTask {
     String refid
 
     @Input @Optional
-    Boolean unfreeze = false
+    Boolean unfreeze = null
 
     @Input @Optional
-    Boolean onlineChanges = false
+    Boolean onlineChanges = null
 
     @Input @Optional
-    Boolean commitWhenErrors = false
+    Boolean commitWhenErrors = null
 
     @Input @Optional
     String callbackClass = null

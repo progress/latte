@@ -37,28 +37,45 @@ class LoadSchemaTest extends Specification {
 
     def "task properties can be changed"() {
         given: "a fresh instance"
+        project.files('src').files*.mkdir()
+        project.files('src/delta1.df', 'src/delta2.df').files*.write('')
 
         when: "task properties are changed"
         task.unfreeze = false
-        task.callbackClass = true
-        task.srcFile = "testfile.df"
+        task.callbackClass = 'fakeClass'
+        task.source('src')
 
         then: "task properties reflect that change"
         task.unfreeze == false
-        task.callbackClass == true
-        task.srcFile == "testfile.df"
+        task.callbackClass == 'fakeClass'
+        task.source.getFiles().size() == 2
+        task.source.getFiles().toArray()[0].getName().contains("delta1.df")
+        task.source.getFiles().toArray()[1].getName().contains("delta2.df")
+
     }
 
     def "schema file is loaded into database"() {
         given: "a schema file to be loaded"
-        task.srcFile = "testfile.df"
+        task.source('src')
+        task.unfreeze = true
+        task.refid = 'foodb'
         
         when: "a schema is loaded "
         task.loadSchema()
 
         then: "PCTLoadSchema should be called"
-        1 *  ant.PCTCreateBase([
-            'srcFile':'testfile.df', 
-        ])
+        1 * ant.PCTLoadSchema(
+            ['unfreeze': true], 
+            _ as Closure 
+        ) >> { Map params, Closure configClosure ->
+            println "PCTLoadSchema(${params}) &${configClosure.class}"
+            // call configClosure the same way AntBuilder would do (delegating
+            // to self) so we can test the closure the compile() method passes
+            configClosure.delegate = ant
+            configClosure()
+            this
+        }
+        
+        1 * ant.PCTConnection(['refid': 'foodb'])
     }
 }
