@@ -126,8 +126,6 @@ class BackupDatabase extends DefaultTask {
 
         project.logger.debug("executing probkup: {}", cmd.toString())
 
-        println cmd
-
         ProcessBuilder pb = new ProcessBuilder(cmd)
         
         def out = new StringBuilder()
