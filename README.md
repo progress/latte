@@ -33,7 +33,7 @@ This will add [PCT][] tasks and types to your project and integrate
  - adds a repository where PCT can be downloaded from; this is
    temporary, we hope [PCT] can be published to Maven Central or
    JCenter in the future
- - adds a dependency on [PCT] 207
+ - adds a dependency on [PCT] 211
  - adds a dependency on Google gson 2.8.0 which is required by PCT
    ABLUnit task
  - loads PCT Ant tasks and types into AntBuilder using loader ref _pct_
@@ -55,7 +55,7 @@ Code contributions are very welcome, please check out [hacking][] notes.
 ## License ##
 
 grabl is free and open-source software licensed under the
-[Apache License 2.0](https://gitlab.com/grabl/grabl/blob/master/LICENSE)
+[Apache License 2.0](https://github.com/dambenso/Progress-Grabl/LICENSE)
 
 
 
