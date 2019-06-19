@@ -62,8 +62,6 @@ class Run extends DefaultTask {
             // <DBConnection ...>
             project.ant.PCTConnection("refid": "${refid}")
 
-            this.source.addToAntBuilder(delegate, null, AntType.FileSet)
-
             // Todo:
             // <DBConnectionSet ...>
             // <propath>
