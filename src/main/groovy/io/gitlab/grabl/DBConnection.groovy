@@ -53,6 +53,39 @@ class DBConnection extends DefaultTask {
     @Input @Optional 
     String id = null
 
+    List<DBAlias> aliases = []  
+
+    DBConnection () {
+        setAliases([] as List)
+    }
+
+    public List<DBAlias> getAliases() {
+        return aliases
+    }
+
+    
+
+    /**
+        add an alias to a database connection
+    */
+    public DBConnection alias(String name, Closure configureClosure) {
+        def alias = new DBAlias()
+        alias.name = name
+        if (configureClosure) {
+            alias.with(configureClosure)
+        }
+        this.aliases << alias
+        this
+    }
+
+    /**
+        add an alias to a database connection
+    */
+    public DBConnection alias(String name) {
+        this.alias(name) {}
+        this
+    }    
+
     @TaskAction
     def connect() {
         Map args =[:]
@@ -75,10 +108,25 @@ class DBConnection extends DefaultTask {
 
         def inpParam = args.findAll {it.value != null}
 
-        ant.DBConnection(*:inpParam)
+        ant.DBConnection(*:inpParam) {
+            def conn = this
+            this.aliases.each {
+                //conn.addConfguredPCTAlias(it.name, it.noError)
+                // PCT369 has been added as enhancement request for this
+                // when that is done, then this can be uncommented to support
+                // alias on db connection
+                
+                // no way to create a PCTAlias right now...need PCT enhancement
+                // to make this easier to call against db connection
+                // def alias = project.ant.typedef("PCTAlias")
+                // alias.name = it.name
+                // alias.noError = it.noError
+                // conn.addConfiguredPCTAlias(alias)
+            }
+        }
     }
-
-     protected GrablExtension getExt() {
+ 
+    protected GrablExtension getExt() {
         return project.extensions.getByType(GrablExtension)
-    }    
+    } 
 }

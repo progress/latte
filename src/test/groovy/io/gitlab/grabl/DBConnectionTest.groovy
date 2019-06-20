@@ -67,6 +67,32 @@ class DBConnectionTest extends Specification {
             dbDir: "testdb/",
             id: "foodb",
             singleUser: true
-        ])
+        ], _ as Closure)
     }
+
+    def "create a dbconnection with an alias" () {
+        given: "an instanceof DBConnection"
+        task.dbName = "sports2000"
+        task.dbDir = "testdb/"
+        task.id = "aliasdb"
+        task.singleUser = true
+        task.alias("foo2") {
+            noError = true
+        }
+
+        when : "an alias is created for a database"
+        task.connect()
+
+        then: "DBConnection has an alias configured correctly"
+        task.aliases.get(0).name == "foo2"
+        task.aliases.get(0).noError == true
+        1 *  ant.DBConnection([
+            dbName: "sports2000",
+            dbDir: "testdb/",
+            id: "aliasdb",
+            singleUser: true
+        ], _ as Closure)
+
+    }
+    
 }
