@@ -41,6 +41,12 @@ class GrablExtension {
     Map pctTaskArgs = [:]
 
     /**
+        default set of environment variables to pass to tasks
+        that can consume them
+    */
+    Map environment = [:]
+
+    /**
      * Stores private reference to project so {@code rcodeDir} can be
      * resolved dynamically when accessed.
      */
@@ -109,5 +115,17 @@ class GrablExtension {
      */
     void pctTaskArgs(Closure cfg) {
         project.configure(pctTaskArgs, cfg)
+    }
+
+    /**
+        Configure the environment variables to pass to any command
+        that can consume them
+    */
+        
+    void environment(Map environment) {
+        this.environment = environment
+        if (!this.environment) {
+            this.environment = new SettingsMap<>([:] as Map)
+        }
     }
 }

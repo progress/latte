@@ -81,6 +81,7 @@ class CompileAblTask extends SourceTask {
         }
     }
 
+    @Internal
     protected GrablExtension getExt() {
         return project.extensions.getByType(GrablExtension)
     }

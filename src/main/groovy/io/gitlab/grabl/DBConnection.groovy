@@ -4,6 +4,7 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.Optional
+import org.gradle.api.tasks.Internal
 
 class DBConnection extends DefaultTask {
 
@@ -53,6 +54,7 @@ class DBConnection extends DefaultTask {
     @Input @Optional 
     String id = null
 
+    @Internal
     List<DBAlias> aliases = []  
 
     DBConnection () {
@@ -108,24 +110,16 @@ class DBConnection extends DefaultTask {
 
         def inpParam = args.findAll {it.value != null}
 
+        // happily abusing nested constructs using ant builder
+        // for reference: https://alvinalexander.com/java/jwarehouse/groovy/src/test/groovy/util/AntTest.groovy.shtml
         ant.DBConnection(*:inpParam) {
-            def conn = this
             this.aliases.each {
-                //conn.addConfguredPCTAlias(it.name, it.noError)
-                // PCT369 has been added as enhancement request for this
-                // when that is done, then this can be uncommented to support
-                // alias on db connection
-                
-                // no way to create a PCTAlias right now...need PCT enhancement
-                // to make this easier to call against db connection
-                // def alias = project.ant.typedef("PCTAlias")
-                // alias.name = it.name
-                // alias.noError = it.noError
-                // conn.addConfiguredPCTAlias(alias)
+                ant.PCTAlias([name : it.name, noError : it.noError])
             }
         }
     }
  
+    @Internal
     protected GrablExtension getExt() {
         return project.extensions.getByType(GrablExtension)
     } 

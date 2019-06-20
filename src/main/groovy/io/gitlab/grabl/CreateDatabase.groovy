@@ -4,6 +4,7 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.Optional
+import org.gradle.api.tasks.Internal
 
 class CreateDatabase extends DefaultTask {
 
@@ -119,6 +120,7 @@ class CreateDatabase extends DefaultTask {
         ant.PCTCreateBase(*:tmp)
     }
 
+    @Internal
     protected GrablExtension getExt() {
         return project.extensions.getByType(GrablExtension)
     }

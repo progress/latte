@@ -6,6 +6,7 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.SourceTask
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.Optional
+import org.gradle.api.tasks.Internal
 
 class LoadSchema extends SourceTask {
 
@@ -47,7 +48,8 @@ class LoadSchema extends SourceTask {
         }
     }
 
-     protected GrablExtension getExt() {
+    @Internal
+    protected GrablExtension getExt() {
         return project.extensions.getByType(GrablExtension)
     }    
 }
