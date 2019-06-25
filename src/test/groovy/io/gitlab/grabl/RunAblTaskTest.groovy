@@ -150,4 +150,55 @@ class RunAblTaskTest extends Specification {
         }        
         1 * ant.DBConnection([refid: 'foodb'])
     }    
+
+   def "PCTRun is called with options"() {
+        given: "an instance of RunAbl with a procedure set"
+        task.procedure = "runme"
+
+        when: "a DB connection reference is added"
+        task.options = ["bob" : "marley"]
+        task.run()
+
+        then: "an run option is specified "
+        // define all expected interactions here so we don't have to repeat the
+        // param (closure) processing closure
+        1 * ant.PCTRun(
+            [procedure: task.procedure],
+            _ as Closure
+        ) >> { Map params, Closure configClosure ->
+            println "PCTRun(${params}) &${configClosure.class}"
+            // call configClosure the same way AntBuilder would do (delegating
+            // to self) so we can test the closure the compile() method passes
+            configClosure.delegate = ant
+            configClosure()
+            this
+        }        
+        1 * ant.PCTRunOption(name : "bob", value : "marley")
+    }       
+
+   def "PCTRun is called with environment"() {
+        given: "an instance of RunAbl with a procedure set"
+        task.procedure = "runme"
+
+        when: "a DB connection reference is added"
+        task.environment = ["bob" : "marley"]
+        task.run()
+
+        then: "a run option is specified "
+        // define all expected interactions here so we don't have to repeat the
+        // param (closure) processing closure
+        1 * ant.PCTRun(
+            [procedure: task.procedure],
+            _ as Closure
+        ) >> { Map params, Closure configClosure ->
+            println "PCTRun(${params}) &${configClosure.class}"
+            // call configClosure the same way AntBuilder would do (delegating
+            // to self) so we can test the closure the compile() method passes
+            configClosure.delegate = ant
+            configClosure()
+            this
+        }        
+        1 * ant.env(key : "bob", value : "marley")
+    }    
+
 }

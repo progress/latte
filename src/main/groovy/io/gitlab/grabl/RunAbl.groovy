@@ -234,6 +234,9 @@ class RunAbl extends BaseGrablTask {
     @Internal @Optional
     File dlcHome
 
+    @Input @Optional
+    Map options = [:]
+
     RunAbl() {
         setDbConnections([] as Set)
     }    
@@ -250,9 +253,21 @@ class RunAbl extends BaseGrablTask {
         return environment;
     }
 
+    Map getOptions() {
+        if (!this.options) {
+            this.options = [:]
+        }
+        return options
+    }
+
     Map setEnvironment(Map environment) {
         this.environment = new SettingsMap<>(ext.environment)
-        this.environment.addAll(environment)
+        this.environment.putAll(environment)
+    }
+
+    Map setOptions(Map options) {
+        this.options = [:]
+        this.options.putAll(options)
     }
 
     /**
@@ -358,14 +373,22 @@ class RunAbl extends BaseGrablTask {
                 this.propath.addToAntBuilder(delegate, 'propath', AntType.FileSet)
             }
 
-            if (dbConnections.size() > 5) {
-                option(name: '-h', value: dbConnections.size().toString())
+            if (dbConnections && !dbConnections.isEmpty()) {
+
+                if (dbConnections.size() > 5) {
+                    ant.PCTRunOption(name: '-h', value: dbConnections.size().toString())            
+                }
+
+                dbConnections.each { DBConnection(refid: it) }
             }
-            dbConnections.each { DBConnection(refid: it) }
+
+            options.each {
+                ant.PCTRunOption(name : it.key, value : it.value)
+            }
 
             if (environment && !environment.isEmpty()) {
                 environment.each {
-                    ant.env([key : it.key, value : it.value])
+                    ant.env(key : it.key, value : it.value)
                 }
             }
 
@@ -387,7 +410,6 @@ class RunAbl extends BaseGrablTask {
 
             // Todo:
             // <DBConnectionSet ...>
-            // <PCTRunOption>
             // <Parameter>
             // <Output Parameter>
 

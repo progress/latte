@@ -1,6 +1,6 @@
 package io.gitlab.grabl
 
-import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.SourceTask
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.Internal
@@ -19,7 +19,7 @@ abstract class BaseGrablSourceTask extends SourceTask {
         defaults to using dlcHome value of extension
         if not specified
     */
-    @Input @Optional
+    @InputFile @Optional
     File dlcHome = ext.dlcHome
 
     /**
