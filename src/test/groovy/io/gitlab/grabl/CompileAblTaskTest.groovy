@@ -132,6 +132,7 @@ class CompileAblTaskTest extends Specification {
     def "compile action creates resources necessary to compile using PCT"() {
         given: "an instance of CompileAblTask with a set destinationDir"
         task.destinationDir = project.file('destDir')
+        task.dlcHome = null
 
         // define all expected interactions here so we don't have to repeat the
         // param (closure) processing closure
@@ -185,6 +186,7 @@ class CompileAblTaskTest extends Specification {
     def "compiler args are passed to PCTCompile"() {
         given: "an instance of CompileAblTask with a set destinationDir"
         task.destinationDir = project.file('destDir')
+        task.dlcHome = null
 
         when: "compiler args are populated"
         task.compileArgs.listing = true
@@ -272,4 +274,20 @@ class CompileAblTaskTest extends Specification {
         then: "option -h is automatically added to progress command"
         1 * ant.option([name: '-h', value: '6'])
     }
+
+    def "dlcHome can be overridden"() {
+        given: "an instance of CompileAblTask with a set dlcHome"
+        task.destinationDir = project.file('destDir')
+        task.dlcHome = new File("testdlchome")
+
+        when: "compile is invoked"
+        task.compile()
+
+        then: "PCTCompile is passed custom dlcHome"
+        1 * ant.PCTCompile(
+            [dlcHome: task.dlcHome.path,
+            destDir: task.destinationDir.path],
+            _ as Closure
+        )
+    }   
 }

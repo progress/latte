@@ -57,6 +57,7 @@ class CreateDatabaseTest extends Specification {
 
         then: "PCTCreateBase should be called"
         1 *  ant.PCTCreateBase([
+            'dlcHome' : "${extension.dlcHome}",
             'dbname':'emptydb.db', 
             'destDir':'build', 
             'auditIndexArea': 'fakeIndexArea',

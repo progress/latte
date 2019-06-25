@@ -10,7 +10,7 @@ import org.gradle.api.tasks.SourceTask
 import org.gradle.api.tasks.TaskAction
 
 
-class CompileAblTask extends SourceTask {
+class CompileAblTask extends BaseGrablSourceTask {
     /**
      * Directory to put the compiled rcode in
      *
@@ -67,7 +67,17 @@ class CompileAblTask extends SourceTask {
     @TaskAction
     def compile() {
         this.destinationDir.mkdirs()
-        project.ant.PCTCompile(destDir: destinationDir.path, *:compileArgs) {
+
+        def args = [:]
+
+        if (dlcHome)
+            args.put('dlcHome', dlcHome.path)
+
+        args.put("destDir", destinationDir.path)
+
+        args.putAll(compileArgs)
+
+        project.ant.PCTCompile(*:args) {
             if (this.propath && !this.propath.isEmpty()) {
                 this.propath.addToAntBuilder(delegate, 'propath')
             }

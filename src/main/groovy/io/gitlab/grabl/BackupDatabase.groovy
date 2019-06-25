@@ -6,6 +6,8 @@ import org.gradle.api.tasks.OutputFile
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.Optional
+import org.gradle.api.tasks.Internal
+
 
 import org.gradle.api.GradleException
 
@@ -18,7 +20,7 @@ import java.nio.file.Paths
     overwriting output file if desired 
 
 */
-class BackupDatabase extends DefaultTask {
+class BackupDatabase extends BaseGrablTask {
 
     /**
     string path to backup file. required. may be absolute or relative
@@ -50,12 +52,6 @@ class BackupDatabase extends DefaultTask {
     @Input @Optional
     Boolean incremental = Boolean.FALSE
 
-    /*
-    specify DLC.  Defaults to DLC environment variable if not specified
-    */
-    @Input @Optional
-    String DLC = "${System.env.DLC}"
-
     @TaskAction
     def backupDB() {
 
@@ -84,13 +80,18 @@ class BackupDatabase extends DefaultTask {
             }
         }
 
+        if (!dlcHome) {
+            throw new GradleException("dlcHome or System.env.DLC must be set")
+        }
+
+        def dlc = dlcHome.path
         
         List<String> cmd = []
 
-        def probkup = Paths.get(DLC, "bin/probkup")
+        def probkup = Paths.get(dlc, "bin/probkup")
 
         if (isWindows()) {
-            probkup = Paths.get(DLC, "bin/probkup.bat")
+            probkup = Paths.get(dlc, "bin/probkup.bat")
         }
 
         cmd.add(probkup.toString())
@@ -159,12 +160,14 @@ class BackupDatabase extends DefaultTask {
     // if not set, then we'll "guess" and add the online if needed
     protected int checkDbHolder(File sourceFile) {
 
+        def dlc = project.file(dlcHome).path
+
         List<String> cmd = []
 
-        def probkup = Paths.get(DLC, "bin/proutil")
+        def probkup = Paths.get(dlc, "bin/proutil")
 
         if (isWindows()) {
-            probkup = Paths.get(DLC, "bin/proutil.bat")
+            probkup = Paths.get(dlc, "bin/proutil.bat")
         }
 
         cmd.add(probkup.toString())
@@ -182,4 +185,5 @@ class BackupDatabase extends DefaultTask {
         return proc.waitFor()
 
     }
+
 }

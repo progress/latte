@@ -104,10 +104,27 @@ class RunAblTaskTest extends Specification {
 
         then: "PCTCompile is passed the extra args"
         1 * ant.PCTRun(
-            [procedure: task.procedure],
+            [
+            procedure: task.procedure],
             _ as Closure
         )
-    }    
+    }   
+
+    def "PCTRun is called is custom dlcHome"() {
+        given: "an instance of RunAbl with a procedure set"
+        task.procedure = "runme"
+        task.dlcHome = new File ('testdlchome')
+
+        when: "run is called"
+        task.run()
+
+        then: "PCTCompile is passed the extra args"
+        1 * ant.PCTRun(
+            [dlcHome: 'testdlchome',
+            procedure: task.procedure],
+            _ as Closure
+        )
+    }     
 
     def "PCTRun is called with a database connection"() {
         given: "an instance of RunAbl with a procedure set"

@@ -20,7 +20,7 @@ import org.apache.tools.ant.types.Environment.Variable;
     Invoke PCT to run a procedure.  The argument names (and the descriptions for them) come from PCT wiki:
         https://github.com/Riverside-Software/pct/wiki/PCTRun
 */
-class RunAbl extends DefaultTask {
+class RunAbl extends BaseGrablTask {
 
     /**
         Procedure to execute
@@ -231,6 +231,9 @@ class RunAbl extends DefaultTask {
     @Internal
     ProfilerSpec profilerSpec = null
 
+    @Internal @Optional
+    File dlcHome
+
     RunAbl() {
         setDbConnections([] as Set)
     }    
@@ -307,6 +310,10 @@ class RunAbl extends DefaultTask {
     @TaskAction
     def run() {
         Map args = [:]
+
+        if (dlcHome) {
+            args.put('dlcHome', dlcHome.path)
+        }
 
         args.put('procedure', procedure)
         args.put('graphicalMode', graphicalMode)          
@@ -385,11 +392,6 @@ class RunAbl extends DefaultTask {
             // <Output Parameter>
 
         }
-    }
-
-    @Internal
-    protected GrablExtension getExt() {
-        return project.extensions.getByType(GrablExtension)
     }
 
 }

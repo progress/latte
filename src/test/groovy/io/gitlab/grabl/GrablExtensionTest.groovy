@@ -57,4 +57,19 @@ class GrablExtensionTest extends Specification {
         extension.dbConnections.containsAll(['foodb', 'bardb'])
         extension.pctTaskArgs == [preprocess: true, listing: true]
     }
+
+    def "it sets DlcHome "() {
+        given: "extension is added to the project"
+        project.extensions.add(GrablExtension.NAME, extension)
+
+        when: "configuration DSL is used"
+        project.configure(project) {
+            abl {
+                dlcHome = new File("testdlchome")
+            }
+        }
+
+        then: "values are changed"
+        extension.dlcHome == new File("testdlchome")
+    }    
 }

@@ -26,6 +26,13 @@ class GrablExtension {
     Object rcodeDir
 
     /**
+        Default location for DLC.  If this is assigned,
+        it will be passed to each task as the value for dlcHome
+        unless overridden.  Defaults to environment variable value for DLC.
+    */
+    Object dlcHome 
+
+    /**
      * The default PROPATH for this project.
      */
     FileCollection propath
@@ -65,6 +72,32 @@ class GrablExtension {
             new File(project.buildDir, this.DEFAULT_RCODE_DIR_NAME)
         }
         propath = project.files('src/main/abl')
+
+        /**
+            Default to using environment variable.
+            if $DLC is not set, fall back to current directory so we don't fail
+            with errors during tests
+        */
+        if (System.env.DLC) {
+            setDlcHome(new File(System.env.DLC))
+        } else {
+            setDlcHome(new File("./"))
+        }
+        
+    }
+
+    /**
+        globally set DlcHome task for PCT based on user preference
+    */
+    public void setDlcHome(File dlcHome) {
+        this.dlcHome = dlcHome
+    }
+
+    /**
+        get value of dlcHome
+    */
+    public File getDlcHome() {
+        return this.dlcHome
     }
 
     File getRcodeDir() {
@@ -124,8 +157,11 @@ class GrablExtension {
         
     void environment(Map environment) {
         this.environment = environment
+
+        // ensure this never goes null
         if (!this.environment) {
             this.environment = new SettingsMap<>([:] as Map)
         }
     }
+    
 }

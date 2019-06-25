@@ -67,7 +67,8 @@ class LoadSchemaTest extends Specification {
 
         then: "PCTLoadSchema should be called"
         1 * ant.PCTLoadSchema(
-            ['unfreeze': true], 
+            ['dlcHome' : extension.dlcHome.path,
+            'unfreeze': true], 
             _ as Closure 
         ) >> { Map params, Closure configClosure ->
             println "PCTLoadSchema(${params}) &${configClosure.class}"

@@ -6,7 +6,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.Internal
 
-class CreateProcedureLibrary extends DefaultTask {
+class CreateProcedureLibrary extends BaseGrablTask {
 
     // If there's an easier way to do this WHILE keeping the hard-typing
     // functionality, let aestrada@progress.com know
@@ -51,7 +51,7 @@ class CreateProcedureLibrary extends DefaultTask {
 
     @Input @Optional
     Boolean defaultExcludes = null
-  
+
     @TaskAction
     def createPL() {
         Map args = [:]
@@ -59,6 +59,9 @@ class CreateProcedureLibrary extends DefaultTask {
         if (basedir && !(new File(basedir).exists())) {
             new File(basedir).mkdirs()
         }
+
+        if (dlcHome)
+            args.put("dlcHome", dlcHome.path)
 
         args.put('destFile', destFile)
         args.put('sharedFile', sharedFile)
@@ -84,8 +87,4 @@ class CreateProcedureLibrary extends DefaultTask {
         ant.PCTLibrary(*:tmp)
     }
 
-    @Internal
-    protected GrablExtension getExt() {
-        return project.extensions.getByType(GrablExtension)
-    }
 }

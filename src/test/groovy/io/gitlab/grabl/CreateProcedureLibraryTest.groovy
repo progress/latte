@@ -67,6 +67,7 @@ class CreateProcedureLibraryTest extends Specification {
 
         then: "PCTLibrary should be called"
         1 *  ant.PCTLibrary([
+            'dlcHome' : extension.dlcHome.path,
             'destFile':'this.pl', 
             'cpInternal':'UTF-8', 
             'defaultExcludes': false,

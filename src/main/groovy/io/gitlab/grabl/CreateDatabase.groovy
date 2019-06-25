@@ -6,7 +6,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.Internal
 
-class CreateDatabase extends DefaultTask {
+class CreateDatabase extends BaseGrablTask {
 
     // If there's an easier way to do this WHILE keeping the hard-typing
     // functionality, let aestrada@progress.com know
@@ -79,6 +79,7 @@ class CreateDatabase extends DefaultTask {
     @Input @Optional
     String auditIndexArea = null
 
+
     @TaskAction
     def createDB() {
         Map args = [:]
@@ -86,6 +87,10 @@ class CreateDatabase extends DefaultTask {
         if (destDir) {
             new File(destDir).mkdirs()
         }
+
+
+        if (dlcHome)
+            args.put("dlcHome", "${dlcHome}")
 
         args.put('dbname', dbName)
         args.put('destDir', destDir)          
@@ -120,8 +125,4 @@ class CreateDatabase extends DefaultTask {
         ant.PCTCreateBase(*:tmp)
     }
 
-    @Internal
-    protected GrablExtension getExt() {
-        return project.extensions.getByType(GrablExtension)
-    }
 }
