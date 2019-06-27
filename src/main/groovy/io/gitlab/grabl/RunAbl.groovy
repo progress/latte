@@ -231,9 +231,6 @@ class RunAbl extends BaseGrablTask {
     @Internal
     ProfilerSpec profilerSpec = null
 
-    @Internal @Optional
-    File dlcHome
-
     @Input @Optional
     Map options = [:]
 

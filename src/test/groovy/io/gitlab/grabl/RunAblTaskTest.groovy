@@ -104,7 +104,7 @@ class RunAblTaskTest extends Specification {
 
         then: "PCTCompile is passed the extra args"
         1 * ant.PCTRun(
-            [
+            [dlcHome : extension.dlcHome.path,
             procedure: task.procedure],
             _ as Closure
         )
@@ -138,7 +138,8 @@ class RunAblTaskTest extends Specification {
         // define all expected interactions here so we don't have to repeat the
         // param (closure) processing closure
         1 * ant.PCTRun(
-            [procedure: task.procedure],
+            [dlcHome : extension.dlcHome.path,
+            procedure: task.procedure],
             _ as Closure
         ) >> { Map params, Closure configClosure ->
             println "PCTRun(${params}) &${configClosure.class}"
@@ -163,7 +164,8 @@ class RunAblTaskTest extends Specification {
         // define all expected interactions here so we don't have to repeat the
         // param (closure) processing closure
         1 * ant.PCTRun(
-            [procedure: task.procedure],
+            [dlcHome : extension.dlcHome.path,
+            procedure: task.procedure],
             _ as Closure
         ) >> { Map params, Closure configClosure ->
             println "PCTRun(${params}) &${configClosure.class}"
@@ -188,7 +190,8 @@ class RunAblTaskTest extends Specification {
         // define all expected interactions here so we don't have to repeat the
         // param (closure) processing closure
         1 * ant.PCTRun(
-            [procedure: task.procedure],
+            [dlcHome : extension.dlcHome.path,
+            procedure: task.procedure],
             _ as Closure
         ) >> { Map params, Closure configClosure ->
             println "PCTRun(${params}) &${configClosure.class}"
