@@ -27,17 +27,16 @@ plugins {
 
 This will add [PCT][] tasks and types to your project and integrate
 [PCT] with [Gradle] lifecycle tasks. It does this by modifying the
-[Gradle] project model in the following way:
+[Gradle] project model.  
 
- - adds new configuration _pct_
- - adds a repository where PCT can be downloaded from; this is
-   temporary, we hope [PCT] can be published to Maven Central or
-   JCenter in the future
+The following are a list of enhancements beyond the original [grabl] plugin
+
  - adds a dependency on [PCT] 211
  - adds a dependency on Google gson 2.8.0 which is required by PCT
    ABLUnit task
- - loads PCT Ant tasks and types into AntBuilder using loader ref _pct_
- - creates native [Gradle] tasks
+ - adds a backup database task
+ - adds the ability to run ABL code as a task
+ - adds ability to create a database
 
 ## Links ##
 
