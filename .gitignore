@@ -93,3 +93,6 @@ local.properties
 .cache-main
 .scala_dependencies
 .worksheet
+
+# ignore ABl r-code
+*.r
