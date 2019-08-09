@@ -29,6 +29,8 @@ class CreateOear extends BaseGrablTask {
     @Input
     String oearPath
 
+    // maybe add an ablapp conf input?
+
     private File oearDir
 
     @TaskAction
@@ -80,6 +82,7 @@ class CreateOear extends BaseGrablTask {
             from "${srcDir}"
             into "${targetDir}"
             include '*.merge'
+            include '*.xml'
         }
     }
 
@@ -144,9 +147,9 @@ class CreateOear extends BaseGrablTask {
     }
 
     def zipOear() {
-        ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream("$oearPath/$projectName"))
+        ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream("$oearPath/$projectName" + ".oear"))
 
-        File srcFile = new File(oearDir)
+        File srcFile = new File("$oearDir")
         for(String fileName : srcFile.list()) {
             addToZip("", "$oearDir" + "/" + fileName, zipOut)
         }
