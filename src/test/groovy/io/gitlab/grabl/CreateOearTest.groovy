@@ -40,21 +40,27 @@ class GenerateOearTest extends Specification {
         given: "a fresh instance"
 
         when: "task properties are changed"
-        task.srcDir = "foo"
+        task.projectDir = "foo"
         task.projectName = "bar"
-
+        task.webappsDir = "foobar"
+        task.oearPath = "barfoo"
+        
         then: "task properties reflect that change"
-        task.srcDir == "foo"
+        task.projectDir == "foo"
         task.projectName == "bar"
+        task.webappsDir == "foobar"
+        task.oearPath == "barfoo"
     }
 
     def "creates an oear"() {
         given: "an instance of CreateOear"
-        task.srcDir = "foo"
-        task.projectName = "bar"
+        task.projectDir = "/scratch/aestrada/foo/oe-services"
+        task.projectName = "POS"
+        task.webappsDir = "/scratch/aestrada/foo/war"
+        task.oearPath = "build"
         
         when: "a PL is created"
-        task.createOear()
+        // task.createOear()
 
         then: "PCTLibrary should be called"
         true

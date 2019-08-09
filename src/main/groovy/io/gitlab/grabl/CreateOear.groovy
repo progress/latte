@@ -7,6 +7,8 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.Internal
 
+import java.util.zip.*
+
 class CreateOear extends BaseGrablTask {
 
     @Input
@@ -16,68 +18,140 @@ class CreateOear extends BaseGrablTask {
     String pfDir = null
 
     @Input
-    String projectName = null
+    String projectName
+
+    @Input
+    String[] webappsDirs
 
     @Input @Optional
-    String[] procLibs = null
+    String[] plDirs = null
 
-    private File oearDir = new File("build/oear", "$projectName")
+    @Input
+    String oearPath
+
+    private File oearDir
 
     @TaskAction
     def createOear() {
+        oearDir = new File("build/oear", "$projectName")
+        
         oearDir.deleteDir() 
-        oearDir.mkdirs()        
+
+        new File("$oearDir", "conf").mkdirs()
+        new File("$oearDir", "openedge").mkdir()
+        new File("$oearDir", "tlr").mkdir()
+        new File("$oearDir", "webapps").mkdir()
+
+        if (pfDir != null) {
+            copyPFFiles("$pfDir", "$oearDir/conf")
+        }
+
+        copyTlrFiles("$projectDir/PASOEContent/WEB-INF/tlr", "$oearDir/tlr")
+        copySrcFiles("$projectDir/AppServer/", "$oearDir/openedge" )
+        copyMapGenFiles("$projectDir/PASOEContent/WEB-INF/openedge", "$oearDir/openedge")
+
+        if (plDirs != null) {
+            plDirs.each {
+                // weird scoping issue where it can't access the private var oearDir
+                copyPL("$it", "build/oear/$projectName/openedge")
+            }
+        }
+
+        webappsDirs.each {
+            // weird scoping issue where it can't access the private var oearDir
+            copyWar("$it", "build/oear/$projectName/webapps")
+        }
+
+        zipOear()
     }
 
     // Copy over .pf files
-    def copyPFFiles() {
-        project.copy(todir:"$oearDir/conf") {
-            fileset(dir:"$pfDir") {
-                include(name:"*.pf")
-            }
+    def copyPFFiles(String srcDir, String targetDir) {
+        project.copy {
+            from "${srcDir}"
+            into "${targetDir}"
+            include '*.pf'
         }
     }
 
     // Copy over the tailoring files 
-    def copyTlrFiles() {
-        project.copy(todir:"$oearDir/tlr") {
-            fileset(dir:"$projectDir/PASOEContent/WEB-INF/tlr") {
-                include(name:"properties.merge")
-            }
+    def copyTlrFiles(String srcDir, String targetDir) {
+        project.copy {
+            from "${srcDir}"
+            into "${targetDir}"
+            include '*.merge'
         }
     }
 
     // Copy ABL src files 
-    def copySrcFiles() {
-        project.copy(todir:"$oearDir/openedge") {
-            fileset(dir:"$projectDir/AppServer") {
-                include(name:"**/*.r")
-            }
+    def copySrcFiles(String srcDir, String targetDir) {
+        project.copy {
+            from "${srcDir}"
+            into "${targetDir}"
+            include '**/*.r'
         }
     }
 
     // Copy over map/gen files from the OpenEdge directory
-    def copyMapGenFiles() {
-        project.copy(todir:"$oearDir/openedge") {
-            fileset(dir:"$projectDir/PASOEContent/WEB-INF/openedge") {
-                include(name:"*.gen")
-                include(name:"*.map")
-            }
+    def copyMapGenFiles(String srcDir, String targetDir) {
+        project.copy {
+            from "${srcDir}"
+            into "${targetDir}"
+            include '*.gen'
+            include '*.map'
         }
     }
 
     // Copy over procedure libraries, which is provided in an array of 
     // directories where .pl's may reside.
-    def copyPLs() {
-        if (procLibs != null) {
-            procLibs.each {
-                project.copy(todir:"$oearDir/openedge") {
-                    fileset(dir:"${it}") {
-                        include(name:"*.pl")
-                    }
-                }
-            }
+    def copyPL(String srcDir, String targetDir) {
+        project.copy {
+            from "$srcDir"
+            into "$targetDir"
+            include "*.pl"
         }
     }
 
+    // Copy over wars
+    def copyWar(String srcDir, String targetDir) {
+        project.copy {
+            from "$srcDir"
+            into "$targetDir"
+            include "*.war"
+        }
+    }
+
+    def addToZip(String path, String srcFile, ZipOutputStream zipOut) {        
+        def int DEFAULT_BUFFER_SIZE = 1024 * 4
+
+        File file = new File(srcFile)
+        String filePath = "".equals(path) ? file.getName() : path + "/" + file.getName()
+        if (file.isDirectory()) {
+            for (String fileName : file.list()) {             
+                addToZip(filePath, srcFile + "/" + fileName, zipOut)
+            }
+        } else {
+            zipOut.putNextEntry(new ZipEntry(filePath))
+            FileInputStream myin = new FileInputStream(srcFile)
+
+            byte[] buffer = new byte[DEFAULT_BUFFER_SIZE]
+            int len
+            while ((len = myin.read(buffer)) != -1) {
+                zipOut.write(buffer, 0, len)
+            } 
+            myin.close()
+        }
+    }
+
+    def zipOear() {
+        ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream("$oearPath/$projectName"))
+
+        File srcFile = new File(oearDir)
+        for(String fileName : srcFile.list()) {
+            addToZip("", "$oearDir" + "/" + fileName, zipOut)
+        }
+
+        zipOut.flush()
+        zipOut.close()
+    }
 }
