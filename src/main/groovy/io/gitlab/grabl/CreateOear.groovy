@@ -119,9 +119,12 @@ class CreateOear extends BaseGrablTask {
         }
     }
 
+    // Recursively adding files to the output stream
     def addToZip(String path, String srcFile, ZipOutputStream zipOut) {        
         def int DEFAULT_BUFFER_SIZE = 1024 * 4
 
+        // Try to recursively get to the bottom-most node of the file structure
+        // and add it to the output stream.
         File file = new File(srcFile)
         String filePath = "".equals(path) ? file.getName() : path + "/" + file.getName()
         if (file.isDirectory()) {
@@ -141,6 +144,9 @@ class CreateOear extends BaseGrablTask {
         }
     }
 
+    // This is the entrypoint of where we zip everything in $oearDir.
+    // You build up a ZipOutputStream by adding each file into the stream and recursively
+    // add the folder and its contents if its a folder.
     def zipOear(File oearDir) {
         ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream("$oearPath/$projectName" + ".oear"))
 
