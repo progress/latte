@@ -17,8 +17,6 @@ class GenerateOearTest extends Specification {
 
     void setup() {
         project = ProjectBuilder.builder().build()
-        // ant = GroovyMock()
-        // project.ant = ant
         project.extensions.create(GrablExtension.NAME, GrablExtension, project)
         extension = project.extensions.getByType(GrablExtension)
         task = createTask()
@@ -28,37 +26,36 @@ class GenerateOearTest extends Specification {
         project.task(name, type: CreateOear)
     }
 
-    // def "it can be added to a project"() {
-    //     when: "the task is added to the project"
-    //     def createTask = project.task('CreateOear', type: CreateOear)
+    def "it can be added to a project"() {
+        when: "the task is added to the project"
+        def createTask = project.task('CreateOear', type: CreateOear)
 
-    //     then: "task is an instance of CreateOear class"
-    //     createTask instanceof CreateOear
-    // }
+        then: "task is an instance of CreateOear class"
+        createTask instanceof CreateOear
+    }
 
-    // def "task properties can be changed"() {
-    //     given: "a fresh instance"
+    def "task properties can be changed"() {
+        given: "a fresh instance"
 
-    //     when: "task properties are changed"
-    //     task.projectDir = "foo"
-    //     task.projectName = "bar"
-    //     task.pfDir = "boofar"
-    //     task.webappsDirs = ["foobar"]
-    //     task.plDirs = ["foo", "bar"]
-    //     task.oearPath = "barfoo"
+        when: "task properties are changed"
+        task.projectDir = "foo"
+        task.projectName = "bar"
+        task.pfDir = "boofar"
+        task.webappsDirs = ["foobar"]
+        task.plDirs = ["foo", "bar"]
+        task.oearPath = "barfoo"
         
-    //     then: "task properties reflect that change"
-    //     task.projectDir == "foo"
-    //     task.projectName == "bar"
-    //     task.pfDir == "boofar"
-    //     task.webappsDirs == ["foobar"]
-    //     task.plDirs == ["foo", "bar"]
-    //     task.oearPath == "barfoo"
-    // }
+        then: "task properties reflect that change"
+        task.projectDir == "foo"
+        task.projectName == "bar"
+        task.pfDir == "boofar"
+        task.webappsDirs == ["foobar"]
+        task.plDirs == ["foo", "bar"]
+        task.oearPath == "barfoo"
+    }
 
     def "an oear is created"() {
-        given:
-        // Create PDSOE-like project structure
+        given: "a PDSOE-like project structure"
         def projDir = new File("/tmp/fakeProj")
         def tlrDir = new File("$projDir", "PASOEContent/WEB-INF/tlr")
         tlrDir.mkdirs()
@@ -95,15 +92,6 @@ class GenerateOearTest extends Specification {
         new File("$plDir/dbTriggers.pl").createNewFile()
         new File("$plDir/bar.pl").createNewFile()
 
-        def buildNumberStdOut = new ByteArrayOutputStream()
-
-        project.exec {
-            commandLine 'chmod', '-R', '777', "/tmp/fakeProj" 
-            standardOutput = buildNumberStdOut
-        }
-        println buildNumberStdOut.toString()
-
-
         when: "createOear() is called"
         task.projectDir = "$projDir"
         task.projectName = "fakeProj"
@@ -114,12 +102,38 @@ class GenerateOearTest extends Specification {
         task.createOear()
 
         then: "an oear is created"
+        def builtOear = new File("build/oear/${task.projectName}")
+
+        // .oear exists
         new File("build/${task.projectName}.oear").exists()
 
-        // cleanup:
-        // projDir.delete()
-        // plDir.delete()
-        // pfDir.deleteDir()
-        // warDir.deleteDir()
+        // tailor files exist
+        new File("${builtOear}/tlr/build.xml").exists()
+        new File("${builtOear}/tlr/properties.merge").exists()
+
+        // configuration files exist
+        new File("${builtOear}/conf/foo.pf").exists()
+
+        // rcode file exists
+        new File("${builtOear}/openedge/Customers.r").exists()
+        new File("${builtOear}/openedge/Items.r").exists()
+
+        // map and gen files exist
+        new File("${builtOear}/openedge/Customers.map").exists()
+        new File("${builtOear}/openedge/Items.gen").exists()
+
+        // .pl's exist
+        new File("${builtOear}/openedge/dbTriggers.pl").exists()
+        new File("${builtOear}/openedge/bar.pl").exists()
+
+        // .war files exist
+        new File("${builtOear}/webapps/fake.war").exists()
+
+        cleanup:
+        projDir.delete()
+        plDir.delete()
+        pfDir.deleteDir()
+        warDir.deleteDir()
+        builtOear.deleteDir()
     }
 }

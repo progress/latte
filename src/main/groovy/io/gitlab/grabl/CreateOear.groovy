@@ -7,8 +7,6 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.Internal
 
-import groovy.io.FileType;
-
 import java.util.zip.*
 
 class CreateOear extends BaseGrablTask {
@@ -31,40 +29,37 @@ class CreateOear extends BaseGrablTask {
     @Input
     String oearPath
 
-    private File oearDir
+    // private File oearDir
 
     @TaskAction
     def createOear() {
-        oearDir = new File("build/oear", "$projectName")
-        
+        def oearDir = new File("build/oear", "$projectName")
         oearDir.deleteDir() 
 
-        new File("$oearDir", "conf").mkdirs()
-        new File("$oearDir", "openedge").mkdir()
-        new File("$oearDir", "tlr").mkdir()
-        new File("$oearDir", "webapps").mkdir()
+        new File("${oearDir.absolutePath}", "conf").mkdirs()
+        new File("${oearDir.absolutePath}", "openedge").mkdir()
+        new File("${oearDir.absolutePath}", "tlr").mkdir()
+        new File("${oearDir.absolutePath}", "webapps").mkdir()
 
-        // if (pfDir != null) {
-        //     copyPFFiles("$pfDir", "$oearDir/conf")
-        // }
+        if (pfDir != null) {
+            copyPFFiles("$pfDir", "${oearDir.absolutePath}/conf")
+        }
 
-        copyTlrFiles("$projectDir/PASOEContent/WEB-INF/tlr", "$oearDir/tlr")
-        // copySrcFiles("$projectDir/AppServer/", "$oearDir/openedge" )
-        // copyMapGenFiles("$projectDir/PASOEContent/WEB-INF/openedge", "$oearDir/openedge")
+        copyTlrFiles("$projectDir/PASOEContent/WEB-INF/tlr", "${oearDir.absolutePath}/tlr")
+        copySrcFiles("$projectDir/AppServer/", "${oearDir.absolutePath}/openedge" )
+        copyMapGenFiles("$projectDir/PASOEContent/WEB-INF/openedge", "${oearDir.absolutePath}/openedge")
 
-        // if (plDirs != null) {
-        //     plDirs.each {
-        //         // weird scoping issue where it can't access the private var oearDir
-        //         copyPL("$it", "build/oear/$projectName/openedge")
-        //     }
-        // }
+        if (plDirs != null) {
+            plDirs.each {
+                copyPL("$it", "${oearDir.absolutePath}/openedge")
+            }
+        }
 
-        // webappsDirs.each {
-        //     // weird scoping issue where it can't access the private var oearDir
-        //     copyWar("$it", "build/oear/$projectName/webapps")
-        // }
+        webappsDirs.each {
+            copyWar("$it", "${oearDir.absolutePath}/webapps")
+        }
 
-        zipOear()
+        zipOear(oearDir)
     }
 
     // Copy over .pf files
@@ -78,17 +73,9 @@ class CreateOear extends BaseGrablTask {
 
     // Copy over the tailoring files 
     def copyTlrFiles(String srcDir, String targetDir) {
-
         project.copy {
             from "${srcDir}"
             into "${targetDir}"
-            include '*.merge'
-            include '*.xml'
-        }
-
-        project.copy {
-            from "/tmp/fakeProj/PASOEContent/WEB-INF/tlr"
-            into "build/oear/fakeProj/tlr"
             include '*.merge'
             include '*.xml'
         }
@@ -154,7 +141,7 @@ class CreateOear extends BaseGrablTask {
         }
     }
 
-    def zipOear() {
+    def zipOear(File oearDir) {
         ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream("$oearPath/$projectName" + ".oear"))
 
         File srcFile = new File("$oearDir")
