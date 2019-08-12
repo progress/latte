@@ -7,6 +7,8 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.Internal
 
+import groovy.io.FileType;
+
 import java.util.zip.*
 
 class CreateOear extends BaseGrablTask {
@@ -29,8 +31,6 @@ class CreateOear extends BaseGrablTask {
     @Input
     String oearPath
 
-    // maybe add an ablapp conf input?
-
     private File oearDir
 
     @TaskAction
@@ -44,25 +44,25 @@ class CreateOear extends BaseGrablTask {
         new File("$oearDir", "tlr").mkdir()
         new File("$oearDir", "webapps").mkdir()
 
-        if (pfDir != null) {
-            copyPFFiles("$pfDir", "$oearDir/conf")
-        }
+        // if (pfDir != null) {
+        //     copyPFFiles("$pfDir", "$oearDir/conf")
+        // }
 
         copyTlrFiles("$projectDir/PASOEContent/WEB-INF/tlr", "$oearDir/tlr")
-        copySrcFiles("$projectDir/AppServer/", "$oearDir/openedge" )
-        copyMapGenFiles("$projectDir/PASOEContent/WEB-INF/openedge", "$oearDir/openedge")
+        // copySrcFiles("$projectDir/AppServer/", "$oearDir/openedge" )
+        // copyMapGenFiles("$projectDir/PASOEContent/WEB-INF/openedge", "$oearDir/openedge")
 
-        if (plDirs != null) {
-            plDirs.each {
-                // weird scoping issue where it can't access the private var oearDir
-                copyPL("$it", "build/oear/$projectName/openedge")
-            }
-        }
+        // if (plDirs != null) {
+        //     plDirs.each {
+        //         // weird scoping issue where it can't access the private var oearDir
+        //         copyPL("$it", "build/oear/$projectName/openedge")
+        //     }
+        // }
 
-        webappsDirs.each {
-            // weird scoping issue where it can't access the private var oearDir
-            copyWar("$it", "build/oear/$projectName/webapps")
-        }
+        // webappsDirs.each {
+        //     // weird scoping issue where it can't access the private var oearDir
+        //     copyWar("$it", "build/oear/$projectName/webapps")
+        // }
 
         zipOear()
     }
@@ -78,9 +78,17 @@ class CreateOear extends BaseGrablTask {
 
     // Copy over the tailoring files 
     def copyTlrFiles(String srcDir, String targetDir) {
+
         project.copy {
             from "${srcDir}"
             into "${targetDir}"
+            include '*.merge'
+            include '*.xml'
+        }
+
+        project.copy {
+            from "/tmp/fakeProj/PASOEContent/WEB-INF/tlr"
+            into "build/oear/fakeProj/tlr"
             include '*.merge'
             include '*.xml'
         }

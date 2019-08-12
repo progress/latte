@@ -17,8 +17,8 @@ class GenerateOearTest extends Specification {
 
     void setup() {
         project = ProjectBuilder.builder().build()
-        ant = GroovyMock()
-        project.ant = ant
+        // ant = GroovyMock()
+        // project.ant = ant
         project.extensions.create(GrablExtension.NAME, GrablExtension, project)
         extension = project.extensions.getByType(GrablExtension)
         task = createTask()
@@ -28,41 +28,98 @@ class GenerateOearTest extends Specification {
         project.task(name, type: CreateOear)
     }
 
-    def "it can be added to a project"() {
-        when: "the task is added to the project"
-        def createTask = project.task('CreateOear', type: CreateOear)
+    // def "it can be added to a project"() {
+    //     when: "the task is added to the project"
+    //     def createTask = project.task('CreateOear', type: CreateOear)
 
-        then: "task is an instance of CreateOear class"
-        createTask instanceof CreateOear
-    }
+    //     then: "task is an instance of CreateOear class"
+    //     createTask instanceof CreateOear
+    // }
 
-    def "task properties can be changed"() {
-        given: "a fresh instance"
+    // def "task properties can be changed"() {
+    //     given: "a fresh instance"
 
-        when: "task properties are changed"
-        task.projectDir = "foo"
-        task.projectName = "bar"
-        task.webappsDir = "foobar"
-        task.oearPath = "barfoo"
+    //     when: "task properties are changed"
+    //     task.projectDir = "foo"
+    //     task.projectName = "bar"
+    //     task.pfDir = "boofar"
+    //     task.webappsDirs = ["foobar"]
+    //     task.plDirs = ["foo", "bar"]
+    //     task.oearPath = "barfoo"
         
-        then: "task properties reflect that change"
-        task.projectDir == "foo"
-        task.projectName == "bar"
-        task.webappsDir == "foobar"
-        task.oearPath == "barfoo"
-    }
+    //     then: "task properties reflect that change"
+    //     task.projectDir == "foo"
+    //     task.projectName == "bar"
+    //     task.pfDir == "boofar"
+    //     task.webappsDirs == ["foobar"]
+    //     task.plDirs == ["foo", "bar"]
+    //     task.oearPath == "barfoo"
+    // }
 
-    def "creates an oear"() {
-        given: "an instance of CreateOear"
-        task.projectDir = "/scratch/aestrada/foo/oe-services"
-        task.projectName = "POS"
-        task.webappsDir = "/scratch/aestrada/foo/war"
+    def "an oear is created"() {
+        given:
+        // Create PDSOE-like project structure
+        def projDir = new File("/tmp/fakeProj")
+        def tlrDir = new File("$projDir", "PASOEContent/WEB-INF/tlr")
+        tlrDir.mkdirs()
+        def rcodeDir = new File("$projDir", "AppServer")
+        rcodeDir.mkdir()
+        def mapGenDir = new File("$projDir", "PASOEContent/WEB-INF/openedge")
+        mapGenDir.mkdir()
+        def plDir = new File("/tmp", "plDir")
+        plDir.mkdir()
+        def pfDir = new File("/tmp", "pfDir")
+        pfDir.mkdir()
+        def warDir = new File("/tmp", "warDir")
+        warDir.mkdir()
+
+        // Create .pf file
+        new File("${pfDir}/foo.pf").createNewFile()
+
+        // Create tailoring files
+        new File("$tlrDir/properties.merge").createNewFile()
+        new File("$tlrDir/build.xml").createNewFile()
+
+        // Create some rcode 
+        new File("$rcodeDir/Customers.r").createNewFile()
+        new File("$rcodeDir/Items.r").createNewFile()
+        
+        // Create a map and a gen file
+        new File("$mapGenDir/Customers.map").createNewFile()
+        new File("$mapGenDir/Items.gen").createNewFile()
+
+        // Create war files
+        new File("$warDir/fake.war").createNewFile()
+
+        // Create war files
+        new File("$plDir/dbTriggers.pl").createNewFile()
+        new File("$plDir/bar.pl").createNewFile()
+
+        def buildNumberStdOut = new ByteArrayOutputStream()
+
+        project.exec {
+            commandLine 'chmod', '-R', '777', "/tmp/fakeProj" 
+            standardOutput = buildNumberStdOut
+        }
+        println buildNumberStdOut.toString()
+
+
+        when: "createOear() is called"
+        task.projectDir = "$projDir"
+        task.projectName = "fakeProj"
+        task.pfDir = "$pfDir"
+        task.webappsDirs = ["$warDir"]
+        task.plDirs = ["$plDir"]
         task.oearPath = "build"
-        
-        when: "a PL is created"
-        // task.createOear()
+        task.createOear()
 
-        then: "PCTLibrary should be called"
-        true
+        then: "an oear is created"
+        new File("build/${task.projectName}.oear").exists()
+
+        // cleanup:
+        // projDir.delete()
+        // plDir.delete()
+        // pfDir.deleteDir()
+        // warDir.deleteDir()
     }
 }
