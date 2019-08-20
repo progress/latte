@@ -2,11 +2,11 @@
 
 # Latte #
 
-Progress fork of this project to enhance and support package updates - May2019
+This is a Progress fork of the [Grabl](https://gitlab.com/grabl) project to enhance and support package updates.
 
 [Latte] = Progress fork of [Grabl][]
-[Gradle] + [(OpenEdge) ABL][OpenEdge] = [grabl][] (powered-by
-[Riverside-Software PCT][PCT])
+
+[Gradle] + [(OpenEdge) ABL][OpenEdge] = [grabl][] (powered-by [Riverside-Software PCT][PCT])
 
 [Latte] is a plugin for [Gradle] providing language support for
 [OpenEdge ABL][OpenEdge].  It provides gradle tasks to compile ABL code
@@ -32,14 +32,15 @@ This will add [PCT][] tasks and types to your project and integrate
 The following are a list of enhancements beyond the original [grabl] plugin
 
  - adds a dependency on [PCT] 211
- - adds a dependency on Google gson 2.8.0 which is required by PCT
-   ABLUnit task
+ - adds a dependency on Google gson 2.8.0 which is required by PCT ABLUnit task
  - adds a backup database task
  - adds the ability to run ABL code as a task
  - adds ability to create a database
+ - adds ability to create procedure libraries
 
 ## Links ##
 
+# NEEDS TO BE UPDATED WHEN 
 - [Home Page, Docs, Guides][grabl]
 - [Plugin Portal][grportal-grabl]
 - [Plugin Portal (base)][grportal-grabl-base]
@@ -54,16 +55,17 @@ Code contributions are very welcome, please check out [hacking][] notes.
 ## License ##
 
 grabl is free and open-source software licensed under the
-[Apache License 2.0](https://github.com/dambenso/Progress-Grabl/LICENSE)
+[Apache License 2.0](https://github.com/progress/latte/LICENSE)
 
 
 
 [Gradle]: https://gradle.org/
 [OpenEdge]: https://www.progress.com/openedge
+[latte]: https://github.com/progress/latte
 [grabl]: https://grabl.gitlab.io/
 [PCT]: https://github.com/Riverside-Software/pct
 [Ant]: http://ant.apache.org/
-[issues]: https://gitlab.com/grabl/grabl/issues
+[issues]: https://github.com/progress/latte/issues
 [hacking]: HACKING.md
 [pipeline-img]: https://gitlab.com/grabl/grabl/badges/master/pipeline.svg
 [pipeline-target]: https://gitlab.com/grabl/grabl/commits/master

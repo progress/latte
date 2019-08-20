@@ -25,4 +25,4 @@ so publishing is as simple as:
 See also [Plugin Publishing Guide](https://guides.gradle.org/publishing-plugins-to-gradle-plugin-portal/)
 
 
-[issues]: https://gitlab.com/grabl/grabl/issues
+[issues]: https://github.com/progress/latte/issues

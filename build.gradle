@@ -23,7 +23,7 @@ version = "0.2.0"
 group = 'oe.espresso.latte'
 
 ext {
-    vcsBaseUrl = 'https://github.com/dambenso/Progress-Grabl'
+    vcsBaseUrl = 'https://github.com/progress/latte'
 }
 
 repositories {
@@ -98,7 +98,7 @@ def pluginList = [
 ]
 
 pluginBundle {
-    website = 'https://github.com/dambenso/Progress-Grabl'
+    website = 'https://github.com/progress/latte'
     vcsUrl = vcsBaseUrl
     tags = ['abl', 'pct']
 }

@@ -9,7 +9,7 @@ adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## v0.2.0 / 2019-08-20
 
-Created a Progress fork of [grabl"](https://gitlab.com/grabl/) called latte.
+Created a Progress fork of [grabl](https://gitlab.com/grabl/) called [latte](https://github.com/progress/latte/).
 
 ## v0.1.0 / 2017-12-29
 
