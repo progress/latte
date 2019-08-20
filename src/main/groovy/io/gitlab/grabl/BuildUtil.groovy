@@ -1,4 +1,4 @@
-package io.gitlab.grabl
+package oe.espresso.latte
 
 import groovy.json.JsonSlurper
 import groovy.json.JsonException

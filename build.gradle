@@ -1,5 +1,5 @@
 /* Copyright © 2019 Progress Software Corporation and/or its subsidiaries or affiliates. All Rights Reserved.
- * Build file for grabl
+ * Build file for latte
  * A Gradle plugin for ABL based on PCT written in Groovy
  *
  * Based on:
@@ -20,7 +20,7 @@ plugins {
 }
 
 version = "0.2.0"
-group = 'io.gitlab.grabl'
+group = 'oe.espresso.latte'
 
 ext {
     vcsBaseUrl = 'https://github.com/dambenso/Progress-Grabl'

@@ -1,4 +1,4 @@
-package io.gitlab.grabl
+package oe.espresso.latte
 
 import org.gradle.api.AntBuilder
 import org.gradle.api.Project

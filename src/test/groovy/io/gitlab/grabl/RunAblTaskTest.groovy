@@ -2,7 +2,7 @@
   Copyright © 2019 Progress Software Corporation and/or its subsidiaries or affiliates. All Rights Reserved.
 */
 
-package io.gitlab.grabl
+package oe.espresso.latte
 
 import org.gradle.api.AntBuilder
 import org.gradle.api.Project

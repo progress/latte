@@ -1,4 +1,4 @@
-package io.gitlab.grabl
+package oe.espresso.latte
 
 import org.gradle.api.Project
 import org.gradle.api.file.FileCollection
@@ -117,7 +117,7 @@ class GrablExtension {
     }
 
     /**
-     * Add some paths to propath of all grabl tasks
+     * Add some paths to propath of all latte tasks
      *
      * The given paths will be evaluated as per
      * {@link Project.files(Object...)}.

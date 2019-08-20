@@ -1,4 +1,4 @@
-package io.gitlab.grabl
+package oe.espresso.latte
 
 import org.gradle.api.file.FileCollection
 import org.gradle.api.file.FileCollection.AntType

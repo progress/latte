@@ -1,4 +1,4 @@
-package io.gitlab.grabl
+package oe.espresso.latte
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
@@ -16,7 +16,7 @@ class GrablPluginTest {
     @Before
     void setup() {
         project = ProjectBuilder.builder().build()
-        project.pluginManager.apply 'io.gitlab.grabl.grabl'
+        project.pluginManager.apply 'oe.espresso.latte.latte'
     }
 
     @Test

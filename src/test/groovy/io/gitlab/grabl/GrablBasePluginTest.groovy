@@ -1,5 +1,5 @@
 // Copyright © 2019 Progress Software Corporation and/or its subsidiaries or affiliates. All Rights Reserved.
-package io.gitlab.grabl
+package oe.espresso.latte
 
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
@@ -11,7 +11,7 @@ class GrablBasePluginTest extends Specification {
 
     def setup() {
         project = ProjectBuilder.builder().build()
-        project.pluginManager.apply 'io.gitlab.grabl.grabl-base'
+        project.pluginManager.apply 'oe.espresso.latte.latte-base'
     }
 
     def 'can be applied'() {

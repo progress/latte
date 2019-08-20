@@ -21,7 +21,7 @@ can use it by just adding this to your `build.gradle`:
 
 ``` groovy
 plugins {
-  id "io.gitlab.grabl.grabl" version "0.1.0"
+  id "oe.espresso.latte.grabl" version "0.1.0"
 }
 ```
 
@@ -69,5 +69,5 @@ grabl is free and open-source software licensed under the
 [pipeline-target]: https://gitlab.com/grabl/grabl/commits/master
 [coverage-img]: https://gitlab.com/grabl/grabl/badges/master/coverage.svg
 [coverage-target]: https://grabl.gitlab.io/grabl/reports/clover/html/
-[grportal-grabl]: https://plugins.gradle.org/plugin/io.gitlab.grabl.grabl
-[grportal-grabl-base]: https://plugins.gradle.org/plugin/io.gitlab.grabl.grabl-base
+[grportal-grabl]: https://plugins.gradle.org/plugin/oe.espresso.latte.grabl
+[grportal-grabl-base]: https://plugins.gradle.org/plugin/oe.espresso.latte.grabl-base

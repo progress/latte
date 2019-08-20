@@ -36,7 +36,7 @@ See [grabl/grabl%"v0.0.0"](https://gitlab.com/grabl/grabl/milestones/1).
 
   * Add release management using nebula.release plugin
   * Publish plugin to the Gradle Plugins Portal as
-    [grabl](https://plugins.gradle.org/plugin/io.gitlab.grabl.grabl)
+    [latte](https://plugins.gradle.org/plugin/oe.espresso.latte.latte)
   * Build in GitLab-CI so bad commits / MRs are spotted early
   * Provide CompileAblTask, grabl extension (configuration point)
   * Add PCT tasks and types to project it's applied to
