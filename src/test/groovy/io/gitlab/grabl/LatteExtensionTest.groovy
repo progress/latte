@@ -8,14 +8,14 @@ import spock.lang.Specification
 /**
  *
  */
-class GrablExtensionTest extends Specification {
+class LatteExtensionTest extends Specification {
     Project project = ProjectBuilder.builder().build()
-    GrablExtension extension = new GrablExtension(project)
+    LatteExtension extension = new LatteExtension(project)
 
     def "it provides sane defaults"() {
         expect: "default property values to use sane conventions"
         extension.rcodeDir == new File(
-                project.buildDir, GrablExtension.DEFAULT_RCODE_DIR_NAME)
+                project.buildDir, LatteExtension.DEFAULT_RCODE_DIR_NAME)
         extension.propath?.files == project.files('src/main/abl').files
         extension.dbConnections?.isEmpty()
         extension.pctTaskArgs == [:]
@@ -25,7 +25,7 @@ class GrablExtensionTest extends Specification {
 
         then: "rcodeDir changes with it"
         extension.rcodeDir == new File(
-                project.buildDir, GrablExtension.DEFAULT_RCODE_DIR_NAME)
+                project.buildDir, LatteExtension.DEFAULT_RCODE_DIR_NAME)
 
         when: "rcodeDir is reset (set to a static value) and buildDir is changed"
         extension.rcodeDir = new File(project.buildDir, 'newRcode')
@@ -36,7 +36,7 @@ class GrablExtensionTest extends Specification {
 
     def "it provides configuration DSL to the project"() {
         given: "extension is added to the project"
-        project.extensions.add(GrablExtension.NAME, extension)
+        project.extensions.add(LatteExtension.NAME, extension)
 
         when: "configuration DSL is used"
         project.configure(project) {
@@ -60,7 +60,7 @@ class GrablExtensionTest extends Specification {
 
     def "it sets DlcHome "() {
         given: "extension is added to the project"
-        project.extensions.add(GrablExtension.NAME, extension)
+        project.extensions.add(LatteExtension.NAME, extension)
 
         when: "configuration DSL is used"
         project.configure(project) {

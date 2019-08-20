@@ -4,7 +4,7 @@ package oe.espresso.latte
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
-class GrablBasePlugin implements Plugin<Project> {
+class LatteBasePlugin implements Plugin<Project> {
     @Override
     void apply(Project target) {
         addPctConfiguration(target)
@@ -48,6 +48,6 @@ class GrablBasePlugin implements Plugin<Project> {
     }
 
     void addExtension(Project target) {
-        target.extensions.create(GrablExtension.NAME, GrablExtension, target)
+        target.extensions.create(LatteExtension.NAME, LatteExtension, target)
     }
 }

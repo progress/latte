@@ -12,15 +12,15 @@ import spock.lang.Specification
 class CreateDatabaseTest extends Specification {
     Project project
     AntBuilder ant
-    GrablExtension extension
+    LatteExtension extension
     CreateDatabase task
 
     void setup() {
         project = ProjectBuilder.builder().build()
         ant = GroovyMock()
         project.ant = ant
-        project.extensions.create(GrablExtension.NAME, GrablExtension, project)
-        extension = project.extensions.getByType(GrablExtension)
+        project.extensions.create(LatteExtension.NAME, LatteExtension, project)
+        extension = project.extensions.getByType(LatteExtension)
         task = createTask()
     }
 

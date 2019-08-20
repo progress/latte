@@ -5,7 +5,7 @@ import groovy.json.JsonException
 
 
 class BuildUtil {
-    static Map<String, List<String>> loadDbDeps(String dbDepFile = 'build/grablDbDepCache.json') {
+    static Map<String, List<String>> loadDbDeps(String dbDepFile = 'build/latteDbDepCache.json') {
         def dbDeps = [:]
         def js = new JsonSlurper()
         try {

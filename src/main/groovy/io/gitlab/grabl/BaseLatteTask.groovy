@@ -37,8 +37,8 @@ abstract class BaseLatteTask extends DefaultTask {
     }    
 
     @Internal
-    protected GrablExtension getExt() {
-        return project.extensions.getByType(GrablExtension)
+    protected LatteExtension getExt() {
+        return project.extensions.getByType(LatteExtension)
     }
 
 }

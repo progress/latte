@@ -10,7 +10,7 @@ import static org.hamcrest.CoreMatchers.instanceOf
 import static org.junit.Assert.assertThat
 import static org.junit.Assert.assertTrue
 
-class GrablPluginTest {
+class LattePluginTest {
     Project project
 
     @Before
@@ -21,17 +21,17 @@ class GrablPluginTest {
 
     @Test
     void canBeApplied() {
-        assertTrue(project.plugins.hasPlugin(GrablPlugin))
+        assertTrue(project.plugins.hasPlugin(LattePlugin))
     }
 
     @Test
     void appliesBasePlugin() {
-        assertTrue(project.plugins.hasPlugin(GrablBasePlugin))
+        assertTrue(project.plugins.hasPlugin(LatteBasePlugin))
     }
 
     @Test
     void addsTasksToProject() {
         assertThat(project.tasks.compileAbl, instanceOf(CompileAblTask))
-        assertThat(project.tasks.checkGrabl, instanceOf(DefaultTask))
+        assertThat(project.tasks.checkLatte, instanceOf(DefaultTask))
     }
 }

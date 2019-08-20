@@ -4,11 +4,11 @@ import org.gradle.api.Project
 import org.gradle.api.file.FileCollection
 
 /**
- * Global default grabl plugin configuration.
+ * Global default latte plugin configuration.
  *
- * These settings are applied to relevant tasks created by grabl.
+ * These settings are applied to relevant tasks created by latte.
  */
-class GrablExtension {
+class LatteExtension {
     /**
      * Name of the property on Project this instance should be bound to.
      */
@@ -59,7 +59,7 @@ class GrablExtension {
      */
     private Project project
 
-    GrablExtension(Project project) {
+    LatteExtension(Project project) {
         this.project = project
 
         /* Set initial value to a closure so that it is re-evaluated on
@@ -129,7 +129,7 @@ class GrablExtension {
     }
 
     /**
-     * Add some database connection references to all grabl tasks
+     * Add some database connection references to all latte tasks
      *
      * @param dbs an iterable of names/aliases of databases to add
      */

@@ -34,8 +34,8 @@ abstract class BaseLatteSourceTask extends SourceTask {
     }
 
     @Internal
-    protected GrablExtension getExt() {
-        return project.extensions.getByType(GrablExtension)
+    protected LatteExtension getExt() {
+        return project.extensions.getByType(LatteExtension)
     }
 
 }

@@ -4,14 +4,14 @@ import org.gradle.api.Project
 import org.gradle.api.Plugin
 
 
-class GrablPlugin implements Plugin<Project> {
+class LattePlugin implements Plugin<Project> {
     void apply(Project target) {
-        target.pluginManager.apply(GrablBasePlugin)
+        target.pluginManager.apply(LatteBasePlugin)
 
         target.task('compileAbl', type: CompileAblTask)
-        target.task('checkGrabl') {
+        target.task('checkLatte') {
             doLast {
-                println 'Hello from GrablPlugin'
+                println 'Hello from LattePlugin'
                 ant.PCTVersion()
             }
         }

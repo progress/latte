@@ -10,15 +10,15 @@ import spock.lang.Specification
 class CompileAblTaskTest extends Specification {
     Project project
     AntBuilder ant
-    GrablExtension extension
+    LatteExtension extension
     CompileAblTask task
 
     void setup() {
         project = ProjectBuilder.builder().build()
         ant = GroovyMock()
         project.ant = ant
-        project.extensions.create(GrablExtension.NAME, GrablExtension, project)
-        extension = project.extensions.getByType(GrablExtension)
+        project.extensions.create(LatteExtension.NAME, LatteExtension, project)
+        extension = project.extensions.getByType(LatteExtension)
         task = createTask()
     }
 
@@ -57,8 +57,8 @@ class CompileAblTaskTest extends Specification {
     }
 
     def "task properties can be changed without affecting extension properties"() {
-        given: "a fresh instance GrablExtension"
-        GrablExtension defExtension = new GrablExtension(project)
+        given: "a fresh instance LatteExtension"
+        LatteExtension defExtension = new LatteExtension(project)
 
         when: "task properties are changed"
         task.destinationDir = project.file('rcode')

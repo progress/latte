@@ -87,13 +87,13 @@ def pluginList = [
         "${project.name}-base",
         'A Gradle base plugin for ABL language support based on PCT',
         "${project.group}.${project.name}-base",
-        "${project.group}.GrablBasePlugin"
+        "${project.group}.LatteBasePlugin"
     ),
     new GradlePluginMetaData(
         project.name,
         'A Gradle plugin for ABL language support based on PCT',
         "${project.group}.${project.name}",
-        "${project.group}.GrablPlugin"
+        "${project.group}.LattePlugin"
     )
 ]
 

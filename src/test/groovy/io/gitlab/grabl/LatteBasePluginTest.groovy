@@ -6,7 +6,7 @@ import org.gradle.api.artifacts.Configuration
 import org.gradle.testfixtures.ProjectBuilder
 import spock.lang.Specification
 
-class GrablBasePluginTest extends Specification {
+class LatteBasePluginTest extends Specification {
     Project project
 
     def setup() {
@@ -16,7 +16,7 @@ class GrablBasePluginTest extends Specification {
 
     def 'can be applied'() {
         expect:
-        project.plugins.hasPlugin(GrablBasePlugin)
+        project.plugins.hasPlugin(LatteBasePlugin)
     }
 
     def 'does not create tasks'() {
@@ -77,8 +77,8 @@ class GrablBasePluginTest extends Specification {
         null != project.ant.references.pct
     }
 
-    def 'adds grabl extension'() {
+    def 'adds latte extension'() {
         expect:
-        project.abl instanceof GrablExtension
+        project.abl instanceof LatteExtension
     }
 }

@@ -12,13 +12,13 @@ import spock.lang.Specification
 class GenerateOearTest extends Specification {
     Project project
     AntBuilder ant
-    GrablExtension extension
+    LatteExtension extension
     CreateOear task
 
     void setup() {
         project = ProjectBuilder.builder().build()
-        project.extensions.create(GrablExtension.NAME, GrablExtension, project)
-        extension = project.extensions.getByType(GrablExtension)
+        project.extensions.create(LatteExtension.NAME, LatteExtension, project)
+        extension = project.extensions.getByType(LatteExtension)
         task = createTask()
     }
 
