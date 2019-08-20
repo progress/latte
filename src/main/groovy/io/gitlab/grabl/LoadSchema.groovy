@@ -9,7 +9,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.Internal
 
-class LoadSchema extends BaseGrablSourceTask {
+class LoadSchema extends BaseLatteSourceTask {
 
     @Input
     String refid

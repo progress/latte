@@ -7,7 +7,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.Internal
 
-class CreateProcedureLibrary extends BaseGrablTask {
+class CreateProcedureLibrary extends BaseLatteTask {
 
     // If there's an easier way to do this WHILE keeping the hard-typing
     // functionality, let aestrada@progress.com know

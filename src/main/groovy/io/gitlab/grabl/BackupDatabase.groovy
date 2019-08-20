@@ -21,7 +21,7 @@ import java.nio.file.Paths
     overwriting output file if desired 
 
 */
-class BackupDatabase extends BaseGrablTask {
+class BackupDatabase extends BaseLatteTask {
 
     /**
     string path to backup file. required. may be absolute or relative

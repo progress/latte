@@ -20,7 +20,7 @@ import org.apache.tools.ant.types.Environment.Variable;
     Invoke PCT to run a procedure.  The argument names (and the descriptions for them) come from PCT wiki:
         https://github.com/Riverside-Software/pct/wiki/PCTRun
 */
-class RunAbl extends BaseGrablTask {
+class RunAbl extends BaseLatteTask {
 
     /**
         Procedure to execute

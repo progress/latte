@@ -10,7 +10,7 @@ import org.gradle.api.tasks.SourceTask
 import org.gradle.api.tasks.TaskAction
 
 
-class CompileAblTask extends BaseGrablSourceTask {
+class CompileAblTask extends BaseLatteSourceTask {
     /**
      * Directory to put the compiled rcode in
      *

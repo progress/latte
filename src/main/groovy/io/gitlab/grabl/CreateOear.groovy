@@ -9,7 +9,7 @@ import org.gradle.api.tasks.Internal
 
 import java.util.zip.*
 
-class CreateOear extends BaseGrablTask {
+class CreateOear extends BaseLatteTask {
 
     @Input
     String projectDir = null

@@ -19,7 +19,7 @@ import java.nio.file.Paths
     dlcHome and similar.
 
 */
-abstract class BaseGrablTask extends DefaultTask {
+abstract class BaseLatteTask extends DefaultTask {
 
     /**
         value for OpenEdge installation location.

@@ -15,7 +15,7 @@ import org.gradle.api.tasks.Internal
     dlcHome and similar.
 
 */
-abstract class BaseGrablSourceTask extends SourceTask {
+abstract class BaseLatteSourceTask extends SourceTask {
 
 
     /**
