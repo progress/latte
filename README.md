@@ -1,27 +1,27 @@
 [![pipeline status][pipeline-img]][pipeline-target] [![coverage report][coverage-img]][coverage-target]
 
-# Grabl #
+# Latte #
 
 Progress fork of this project to enhance and support package updates - May2019
 
-
+[Latte] = Progress fork of [Grabl][]
 [Gradle] + [(OpenEdge) ABL][OpenEdge] = [grabl][] (powered-by
 [Riverside-Software PCT][PCT])
 
-[Grabl] is a plugin for [Gradle] providing language support for
+[Latte] is a plugin for [Gradle] providing language support for
 [OpenEdge ABL][OpenEdge].  It provides gradle tasks to compile ABL code
 and run unit tests using ABLUnit.  All the hard work is done by [PCT],
 thanks to gradle's fantastic integration with [Ant].
 
 ## Usage ##
 
-[Grabl] is hosted in the [Gradle Plugin Portal][grportal-grabl] so you
+[Latte] is hosted in the [Gradle Plugin Portal][grportal-grabl] so you
 can use it by just adding this to your `build.gradle`:
 
 
 ``` groovy
 plugins {
-  id "oe.espresso.latte.grabl" version "0.1.0"
+  id "oe.espresso.latte.latte" version "0.2.0"
 }
 ```
 
