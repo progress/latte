@@ -35,9 +35,10 @@ The following are a list of enhancements beyond the original [grabl] plugin
  - adds a dependency on Google gson 2.8.0 which is required by PCT ABLUnit task
  - adds a backup database task
  - adds the ability to run ABL code as a task
- - adds ability to create a database
- - adds ability to create procedure libraries
-
+ - adds the ability to create a database
+ - adds the ability to create procedure libraries
+ - adds the ability to create .oear's
+ 
 ## Links ##
 
 # NEEDS TO BE UPDATED WHEN 
@@ -54,7 +55,7 @@ Code contributions are very welcome, please check out [hacking][] notes.
 
 ## License ##
 
-grabl is free and open-source software licensed under the
+latte and grabl are free and open-source software licensed under the
 [Apache License 2.0](https://github.com/progress/latte/LICENSE)
 
 
