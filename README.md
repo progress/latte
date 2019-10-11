@@ -43,8 +43,8 @@ The following are a list of enhancements beyond the original [grabl] plugin
 
 # NEEDS TO BE UPDATED WHEN 
 - [Home Page, Docs, Guides][grabl]
-- [Plugin Portal][grportal-grabl]
-- [Plugin Portal (base)][grportal-grabl-base]
+- [Plugin Portal][grportal]
+- [Plugin Portal (base)][grportal-base]
 - [Examples Repo](https://gitlab.com/grabl/grabl-samples)
 
 ## Contributing ##
