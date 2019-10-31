@@ -4,10 +4,6 @@
 
 This is a Progress fork of the [Grabl](https://gitlab.com/grabl) project to enhance and support package updates.
 
-[Latte] = Progress fork of [Grabl][]
-
-[Gradle] + [(OpenEdge) ABL][OpenEdge] = [grabl][] (powered-by [Riverside-Software PCT][PCT])
-
 [Latte] is a plugin for [Gradle] providing language support for
 [OpenEdge ABL][OpenEdge].  It provides gradle tasks to compile ABL code
 and run unit tests using ABLUnit.  All the hard work is done by [PCT],
