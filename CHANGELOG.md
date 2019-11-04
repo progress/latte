@@ -9,7 +9,6 @@ adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## v0.2.1 / 2019-11-04
 
-- Update dependency references
 - Peformance enhancements
 - README updates
 
