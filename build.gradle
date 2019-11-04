@@ -19,7 +19,7 @@ plugins {
     id "groovy"
 }
 
-version = "0.2.0"
+version = "0.2.1"
 group = 'oe.espresso.latte'
 
 ext {
