@@ -18,7 +18,7 @@ Created a Progress fork of [grabl](https://gitlab.com/grabl/) called [latte](htt
 
 ## v0.1.0 / 2017-12-29
 
-See [grabl/grabl%"v0.1.0"](https://gitlab.com/grabl/grabl/milestones/2).
+See [grabl/grabl"v0.1.0"](https://gitlab.com/grabl/grabl/milestones/2).
 
 ### Added
 
@@ -38,7 +38,7 @@ See [grabl/grabl%"v0.1.0"](https://gitlab.com/grabl/grabl/milestones/2).
 
 ## v0.0.0 / 2017-11-22
 
-See [grabl/grabl%"v0.0.0"](https://gitlab.com/grabl/grabl/milestones/1).
+See [grabl/grabl"v0.0.0"](https://gitlab.com/grabl/grabl/milestones/1).
 
 ### Added
 
