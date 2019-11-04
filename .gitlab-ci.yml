@@ -31,7 +31,7 @@ apidocs:
     paths:
       - build/docs/
   only:
-    - master@grabl/grabl
+    - master@latte/latte
 
 # Use the generated build output to run the tests.
 test:
@@ -58,4 +58,4 @@ pages:
     paths:
       - public
   only:
-    - master@grabl/grabl
+    - master@latte/latte
