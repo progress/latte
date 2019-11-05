@@ -20,7 +20,7 @@ plugins {
 }
 
 version = "0.2.1"
-group = 'oe.espresso.latte'
+group = 'oe.espresso'
 
 ext {
     vcsBaseUrl = 'https://github.com/progress/latte'
@@ -101,6 +101,8 @@ pluginBundle {
     website = 'https://github.com/progress/latte'
     vcsUrl = vcsBaseUrl
     tags = ['abl', 'pct']
+    description = "oe.espresso"
+    version = "0.2.1"
 }
 
 
@@ -111,6 +113,7 @@ pluginList.each { plugin ->
         plugins {
             create(plugin.id) {
                 id = plugin.id
+                displayName = 'oe.espresso.latte'
                 implementationClass = plugin.implementationClass
             }
         }
