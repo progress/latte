@@ -25,14 +25,14 @@ class LatteBasePlugin implements Plugin<Project> {
     void addRsswRepository(Project target) {
         target.repositories {
             maven {
-                url 'http://central.maven.org/maven2/'
+                url 'https://repo1.maven.org'
             }
         }
     }
 
     void addPctDependency(Project target) {
         target.dependencies {
-            pct 'eu.rssw.pct:pct:211'
+            pct 'eu.rssw.pct:pct:214'
         }
     }
 
