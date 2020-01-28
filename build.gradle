@@ -19,7 +19,7 @@ plugins {
     id "groovy"
 }
 
-version = "0.2.1"
+version = "0.2.2"
 group = 'oe.espresso'
 
 ext {
@@ -84,16 +84,16 @@ class GradlePluginMetaData {
 
 def pluginList = [
     new GradlePluginMetaData(
-        "${project.name}-base",
+        'latte-base',
         'A Gradle base plugin for ABL language support based on PCT',
-        "${project.group}.${project.name}-base",
-        "${project.group}.LatteBasePlugin"
+        'oe.espresso.latte.latte-base',
+        'oe.espresso.latte.LatteBasePlugin'
     ),
     new GradlePluginMetaData(
-        project.name,
+        'latte',
         'A Gradle plugin for ABL language support based on PCT',
-        "${project.group}.${project.name}",
-        "${project.group}.LattePlugin"
+        'oe.espresso.latte.latte',
+        "oe.espresso.latte.LattePlugin"
     )
 ]
 
