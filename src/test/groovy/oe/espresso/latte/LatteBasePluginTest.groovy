@@ -11,7 +11,7 @@ class LatteBasePluginTest extends Specification {
 
     def setup() {
         project = ProjectBuilder.builder().build()
-        project.pluginManager.apply 'oe.espresso.latte.latte-base'
+        project.pluginManager.apply 'oe.espresso.latte-base'
     }
 
     def 'can be applied'() {

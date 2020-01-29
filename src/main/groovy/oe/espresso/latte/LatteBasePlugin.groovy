@@ -25,7 +25,7 @@ class LatteBasePlugin implements Plugin<Project> {
     void addRsswRepository(Project target) {
         target.repositories {
             maven {
-                url 'https://repo1.maven.org'
+                url 'https://repo1.maven.org/maven2'
             }
         }
     }
