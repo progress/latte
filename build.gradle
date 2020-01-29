@@ -86,13 +86,13 @@ def pluginList = [
     new GradlePluginMetaData(
         "${project.name}-base",
         'A Gradle base plugin for ABL language support based on PCT',
-        'oe.espresso.latte.latte-base',
+        'oe.espresso.latte-base',
         'oe.espresso.latte.LatteBasePlugin'
     ),
     new GradlePluginMetaData(
         "${project.name}",
         'A Gradle plugin for ABL language support based on PCT',
-        'oe.espresso.latte.latte',
+        'oe.espresso.latte',
         "oe.espresso.latte.LattePlugin"
     )
 ]
