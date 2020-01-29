@@ -16,7 +16,7 @@ class LattePluginTest {
     @Before
     void setup() {
         project = ProjectBuilder.builder().build()
-        project.pluginManager.apply 'oe.espresso.latte.latte'
+        project.pluginManager.apply 'oe.espresso.latte'
     }
 
     @Test
