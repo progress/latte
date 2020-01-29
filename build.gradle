@@ -84,13 +84,13 @@ class GradlePluginMetaData {
 
 def pluginList = [
     new GradlePluginMetaData(
-        'latte-base',
+        "${project.name}-base",
         'A Gradle base plugin for ABL language support based on PCT',
         'oe.espresso.latte.latte-base',
         'oe.espresso.latte.LatteBasePlugin'
     ),
     new GradlePluginMetaData(
-        'latte',
+        "${project.name}",
         'A Gradle plugin for ABL language support based on PCT',
         'oe.espresso.latte.latte',
         "oe.espresso.latte.LattePlugin"
@@ -100,7 +100,7 @@ def pluginList = [
 pluginBundle {
     website = 'https://github.com/progress/latte'
     vcsUrl = vcsBaseUrl
-    tags = ['abl', 'pct']
+    tags = ['abl', 'pct', 'openedge']
     description = "oe.espresso"
     version = "0.2.1"
 }
