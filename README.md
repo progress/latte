@@ -16,7 +16,7 @@ can use it by just adding this to your `build.gradle`:
 
 ```groovy
 plugins {
-  id "oe.espresso.latte.latte" version "0.2.1"
+  id "oe.espresso.latte.latte" version "0.2.2"
 }
 ```
 
@@ -26,7 +26,7 @@ This will add [PCT][] tasks and types to your project and integrate
 
 The following are a list of enhancements beyond the original [grabl] plugin
 
-- adds a dependency on [PCT] 211
+- adds a dependency on [PCT] 214
 - adds a dependency on Google gson 2.8.0 which is required by PCT ABLUnit task
 - adds a backup database task
 - adds the ability to run ABL code as a task
