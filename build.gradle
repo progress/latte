@@ -102,7 +102,7 @@ pluginBundle {
     vcsUrl = vcsBaseUrl
     tags = ['abl', 'pct', 'openedge']
     description = "oe.espresso"
-    version = "0.2.1"
+    version = "${version}"
 }
 
 
