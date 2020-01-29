@@ -19,8 +19,8 @@ plugins {
     id "groovy"
 }
 
-version = "0.2.1"
-group = 'oe.espresso.latte'
+version = "0.2.2"
+group = 'oe.espresso'
 
 ext {
     vcsBaseUrl = 'https://github.com/progress/latte'
@@ -86,21 +86,23 @@ def pluginList = [
     new GradlePluginMetaData(
         "${project.name}-base",
         'A Gradle base plugin for ABL language support based on PCT',
-        "${project.group}.${project.name}-base",
-        "${project.group}.LatteBasePlugin"
+        'oe.espresso.latte.latte-base',
+        'oe.espresso.latte.LatteBasePlugin'
     ),
     new GradlePluginMetaData(
-        project.name,
+        "${project.name}",
         'A Gradle plugin for ABL language support based on PCT',
-        "${project.group}.${project.name}",
-        "${project.group}.LattePlugin"
+        'oe.espresso.latte.latte',
+        "oe.espresso.latte.LattePlugin"
     )
 ]
 
 pluginBundle {
     website = 'https://github.com/progress/latte'
     vcsUrl = vcsBaseUrl
-    tags = ['abl', 'pct']
+    tags = ['abl', 'pct', 'openedge']
+    description = "oe.espresso"
+    version = "${version}"
 }
 
 
@@ -111,6 +113,7 @@ pluginList.each { plugin ->
         plugins {
             create(plugin.id) {
                 id = plugin.id
+                displayName = 'oe.espresso.latte'
                 implementationClass = plugin.implementationClass
             }
         }
