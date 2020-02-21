@@ -56,9 +56,13 @@ class CreateProcedureLibrary extends BaseLatteTask {
     @TaskAction
     def createPL() {
         Map args = [:]
-
+        // TODO - not sure we need to create the basedir as it is where the code is coming from
         if (basedir && !(new File(basedir).exists())) {
             new File(basedir).mkdirs()
+        }
+        // in the destination does not exist - create
+        if (destFile && !(new File(destFile).exists())) {
+            new File(destFile).mkdirs()
         }
 
         if (dlcHome)

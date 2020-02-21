@@ -367,7 +367,11 @@ class RunAbl extends BaseLatteTask {
         ant.PCTRun(*:tmp) {
 
             if (this.propath && !this.propath.isEmpty()) {
-                this.propath.addToAntBuilder(delegate, 'propath', AntType.FileSet)
+                ant.Propath {
+                    propath.each {
+                        ant.Pathelement(path : it)
+                    }
+                }
             }
 
             if (dbConnections && !dbConnections.isEmpty()) {

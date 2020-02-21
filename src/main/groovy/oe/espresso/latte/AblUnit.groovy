@@ -243,10 +243,6 @@ class AblUnit extends BaseLatteSourceTask {
     @Internal
     Map environment = [:]
 
-    @Internal
-    @Optional
-    ProfilerSpec profilerSpec = null
-
     @Input @Optional
     Map options = [:]
 
@@ -255,9 +251,11 @@ class AblUnit extends BaseLatteSourceTask {
         include("**/*.p")
         include("**/*.cls")
         include("**/*.w")
+        /*
         source("src/test/abl")
         baseDir = "src/test/abl"
         propath.addAll(files("src/test/abl"))
+        */
     }    
 
     FileCollection getPropath() {
@@ -309,37 +307,6 @@ class AblUnit extends BaseLatteSourceTask {
         environment.put(name, value)
     }
 
-    /**
-        provide closure to configure the profiler
-    */
-    @Input
-    public void profiler(Closure profilerConfigure) {
-        if (!profilerSpec) {
-            profilerSpec = prepareProfilerSpec()
-        }
-
-        profilerSpec.with(profilerConfigure)
-
-    }
-  
-    @Input
-    public ProfilerSpec getProfiler() {
-        if (!profilerSpec) {
-            profilerSpec = prepareProfilerSpec()
-        }
-
-        return profilerSpec
-    }
-
-    def prepareProfilerSpec() {
-        def profilerSpec = new ProfilerSpec()
-
-        profilerSpec.description = "Profile for ${project.group}.${project.name}.${project.version}" 
-        profilerSpec.outputDir = new File(project.buildDir, "profiler").path
-        profilerSpec.enabled = true
-
-        return profilerSpec
-    }
 
     @TaskAction
     def run() {
@@ -395,7 +362,11 @@ class AblUnit extends BaseLatteSourceTask {
         ant.ABLUnit(*:tmp) {
 
             if (this.propath && !this.propath.isEmpty()) {
-                this.propath.addToAntBuilder(delegate, 'propath', AntType.FileSet)
+                 ant.Propath {
+                    propath.each {
+                        ant.Pathelement(path : it)
+                    }
+                }
             }
 
             if (dbConnections && !dbConnections.isEmpty()) {
@@ -417,23 +388,8 @@ class AblUnit extends BaseLatteSourceTask {
                 }
             }
 
-            if (profiler) {
 
-                def profArgs = [
-                    enabled : profilerSpec.enabled, 
-                    description : profilerSpec.description, 
-                    outputDir : profilerSpec.outputDir,
-                    outputFile : profilerSpec.outputFile,
-                    coverage : profilerSpec.coverage,
-                    statistics : profilerSpec.statistics,
-                    listings : profilerSpec.listings
-                    ]
-
-                def profTmp = profArgs.findAll { it.value != null }
-                ant.Profiler(profTmp)
-            }
-
-            this.source.addToAntBuilder(delegate, null, AntType.FileSet)
+            this.source.addToAntBuilder(delegate, 'fileset', AntType.FileSet)
 
         }
     }
