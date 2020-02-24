@@ -254,7 +254,7 @@ class AblUnit extends BaseLatteSourceTask {
         /*
         source("src/test/abl")
         baseDir = "src/test/abl"
-        propath.addAll(files("src/test/abl"))
+        propath = files("src/test/abl")
         */
     }    
 
