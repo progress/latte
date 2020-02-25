@@ -1,3 +1,5 @@
+// Copyright © 2020 Progress Software Corporation and/or its subsidiaries or affiliates. All Rights Reserved.
+
 package oe.espresso.latte
 
 import org.gradle.api.file.FileCollection

@@ -1,7 +1,8 @@
-// Copyright © 2019 Progress Software Corporation and/or its subsidiaries or affiliates. All Rights Reserved.
+// Copyright © 2019,2020 Progress Software Corporation and/or its subsidiaries or affiliates. All Rights Reserved.
 package oe.espresso.latte
 
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.OutputFile
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.Optional
@@ -11,7 +12,8 @@ class CreateProcedureLibrary extends BaseLatteTask {
 
     // If there's an easier way to do this WHILE keeping the hard-typing
     // functionality, let aestrada@progress.com know
-    @Input @Optional
+    @OutputFile
+    @Optional
     String destFile = null
 
     @Input @Optional
@@ -36,7 +38,7 @@ class CreateProcedureLibrary extends BaseLatteTask {
     String cpColl = null
   
     @Input @Optional
-    String basedir = null
+    String baseDir = null
     
     @Input @Optional
     String includes = null
@@ -57,16 +59,19 @@ class CreateProcedureLibrary extends BaseLatteTask {
     def createPL() {
         Map args = [:]
         // TODO - not sure we need to create the basedir as it is where the code is coming from
-        if (basedir && !(new File(basedir).exists())) {
-            new File(basedir).mkdirs()
+        if (baseDir && !(new File(baseDir).exists())) {
+            new File(baseDir).mkdirs()
         }
-        // in the destination does not exist - create
-        if (destFile && !(new File(destFile).exists())) {
-            new File(destFile).mkdirs()
+        // in the destination folder does not exist - create it
+        File destF = new File(destFile)
+        File parent = destF.getParentFile();
+        if (parent && !parent.exists()) {
+            parent.mkdirs()
         }
 
-        if (dlcHome)
+        if (dlcHome) {
             args.put("dlcHome", dlcHome.path)
+        }
 
         args.put('destFile', destFile)
         args.put('sharedFile', sharedFile)
@@ -76,7 +81,7 @@ class CreateProcedureLibrary extends BaseLatteTask {
         args.put('cpStream', cpStream)
         args.put('cpCase', cpCase)
         args.put('cpColl', cpColl)
-        args.put('basedir', basedir)
+        args.put('basedir', baseDir)
         args.put('includes', includes)
         args.put('includesFile', includesFile)
         args.put('excludes', excludes)
