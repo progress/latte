@@ -74,10 +74,14 @@ class CompileAblTask extends BaseLatteSourceTask {
             args.put('dlcHome', dlcHome.path)
 
         args.put("destDir", destinationDir.path)
+        args.put("compileUnderscore", compileUnderscore)
 
         args.putAll(compileArgs)
 
-        project.ant.PCTCompile(*:args) {
+        // Sort out all the nulls since we wanna leave the defaults to PCT
+        def tmp = args.findAll { it.value != null }
+
+        project.ant.PCTCompile(*:tmp) {
             if (this.propath && !this.propath.isEmpty()) {
                 this.propath.addToAntBuilder(delegate, 'propath')
             }

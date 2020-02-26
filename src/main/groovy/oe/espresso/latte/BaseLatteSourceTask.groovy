@@ -27,6 +27,12 @@ abstract class BaseLatteSourceTask extends SourceTask {
     File dlcHome = ext.dlcHome
 
     /**
+    COMPILE statement allows underscores (-zn parameter)
+    */
+    @Input @Optional
+    Boolean compileUnderscore
+
+    /**
         get value of DlcHome
     */
     File getDlcHome() {
