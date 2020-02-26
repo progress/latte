@@ -1,3 +1,5 @@
+// Copyright © 2020 Progress Software Corporation and/or its subsidiaries or affiliates. All Rights Reserved.
+
 package oe.espresso.latte
 
 import org.gradle.api.file.FileCollection
@@ -8,6 +10,7 @@ import org.gradle.api.tasks.Classpath
 
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.Optional
+import org.gradle.api.tasks.OutputDirectory
 
 import org.gradle.api.tasks.Internal
 import org.gradle.api.DefaultTask
@@ -15,18 +18,32 @@ import org.gradle.api.DefaultTask
 import org.apache.tools.ant.types.Environment;
 import org.apache.tools.ant.types.Environment.Variable;
 
-
 /**
-    Invoke PCT to run a procedure.  The argument names (and the descriptions for them) come from PCT wiki:
-        https://github.com/Riverside-Software/pct/wiki/PCTRun
+    Invoke PCT to run unit tests.  The argument names (and the descriptions for them) come from PCT wiki:
+        https://github.com/Riverside-Software/pct/wiki/ABLUnit
 */
-class RunAbl extends BaseLatteTask {
+class AblUnit extends BaseLatteSourceTask {
 
     /**
-        Procedure to execute
+    Directory where to put result file. Don't use destDir under Linux, as a bug prevents results.xml from being generated	
+    */
+    @Optional
+    @OutputDirectory
+    String destinationDir;
+
+    /**
+    Creates ablunit.log in temp directory in case of error	
+    */
+    @Optional
+    @Input
+    Boolean writeLog;
+
+    /**
+    Stop the build process if a test fails (errors are considered failures as well)	
     */
     @Input
-    String procedure
+    @Optional
+    Boolean haltOnFailure;
 
     /**
         True if you want to execute procedure using prowin32 (or prowin on 64 bits platforms), _progres otherwise.	
@@ -228,14 +245,19 @@ class RunAbl extends BaseLatteTask {
     @Internal
     Map environment = [:]
 
-    @Internal
-    ProfilerSpec profilerSpec = null
-
     @Input @Optional
     Map options = [:]
 
-    RunAbl() {
+    AblUnit() {
         setDbConnections([] as Set)
+        include("**/*.p")
+        include("**/*.cls")
+        include("**/*.w")
+        /*
+        source("src/test/abl")
+        baseDir = "src/test/abl"
+        propath = files("src/test/abl")
+        */
     }    
 
     FileCollection getPropath() {
@@ -287,37 +309,6 @@ class RunAbl extends BaseLatteTask {
         environment.put(name, value)
     }
 
-    /**
-        provide closure to configure the profiler
-    */
-    @Input
-    public void profiler(Closure profilerConfigure) {
-        if (!profilerSpec) {
-            profilerSpec = prepareProfilerSpec()
-        }
-
-        profilerSpec.with(profilerConfigure)
-
-    }
-  
-    @Input
-    public ProfilerSpec getProfiler() {
-        if (!profilerSpec) {
-            profilerSpec = prepareProfilerSpec()
-        }
-
-        return profilerSpec
-    }
-
-    def prepareProfilerSpec() {
-        def profilerSpec = new ProfilerSpec()
-
-        profilerSpec.description = "Profile for ${project.group}.${project.name}.${project.version}" 
-        profilerSpec.outputDir = new File(project.buildDir, "profiler").path
-        profilerSpec.enabled = true
-
-        return profilerSpec
-    }
 
     @TaskAction
     def run() {
@@ -327,7 +318,10 @@ class RunAbl extends BaseLatteTask {
             args.put('dlcHome', dlcHome.path)
         }
 
-        args.put('procedure', procedure)
+        if (destinationDir && !(new File(destinationDir).exists())) {
+            new File(destinationDir).mkdirs();
+        }
+
         args.put('graphicalMode', graphicalMode)          
         args.put('baseDir', baseDir)
         args.put('failOnError', failOnError)
@@ -356,6 +350,9 @@ class RunAbl extends BaseLatteTask {
         args.put('debugReady', debugReady)
         args.put('tempDir', tempDir)
         args.put('quickRequest', quickRequest)
+        args.put('destDir', destinationDir)
+        args.put('writeLog', writeLog);
+        args.put('haltOnFailure', haltOnFailure);
 
         // Sort out all the nulls since we wanna leave the defaults to PCT
         def tmp = args.findAll { it.value != null }
@@ -364,10 +361,10 @@ class RunAbl extends BaseLatteTask {
         // -cpinternal, -iniFile, etc. Are these nested nodes or are they just stuffed inside
         // the PCTRun node? Do we even need to implement those for now?
         // There are also no examples to how to specify this option here.
-        ant.PCTRun(*:tmp) {
+        ant.ABLUnit(*:tmp) {
 
             if (this.propath && !this.propath.isEmpty()) {
-                ant.Propath {
+                 ant.Propath {
                     propath.each {
                         ant.Pathelement(path : it)
                     }
@@ -393,26 +390,8 @@ class RunAbl extends BaseLatteTask {
                 }
             }
 
-            if (profiler) {
 
-                def profArgs = [
-                    enabled : profilerSpec.enabled, 
-                    description : profilerSpec.description, 
-                    outputDir : profilerSpec.outputDir,
-                    outputFile : profilerSpec.outputFile,
-                    coverage : profilerSpec.coverage,
-                    statistics : profilerSpec.statistics,
-                    listings : profilerSpec.listings
-                    ]
-
-                def profTmp = profArgs.findAll { it.value != null }
-                ant.Profiler(profTmp)
-            }
-
-            // Todo:
-            // <DBConnectionSet ...>
-            // <Parameter>
-            // <Output Parameter>
+            this.source.addToAntBuilder(delegate, 'fileset', AntType.FileSet)
 
         }
     }

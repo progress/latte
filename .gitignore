@@ -96,3 +96,9 @@ local.properties
 
 # ignore ABl r-code
 *.r
+
+# ignore vscode
+.vscode/
+
+# ignore java crash files
+*.hprof

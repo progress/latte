@@ -7,7 +7,7 @@ package oe.espresso.latte
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 
-class ProfilerSpec {
+class ProfilerSpec implements Serializable {
 
     /**
         Enables or disables profiler	
