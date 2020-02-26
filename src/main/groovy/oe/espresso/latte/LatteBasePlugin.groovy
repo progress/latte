@@ -1,4 +1,4 @@
-// Copyright © 2019 Progress Software Corporation and/or its subsidiaries or affiliates. All Rights Reserved.
+// Copyright © 2019,2020 Progress Software Corporation and/or its subsidiaries or affiliates. All Rights Reserved.
 package oe.espresso.latte
 
 import org.gradle.api.Plugin
@@ -32,7 +32,7 @@ class LatteBasePlugin implements Plugin<Project> {
 
     void addPctDependency(Project target) {
         target.dependencies {
-            pct 'eu.rssw.pct:pct:214'
+            pct 'eu.rssw.pct:pct:215'
         }
     }
 
