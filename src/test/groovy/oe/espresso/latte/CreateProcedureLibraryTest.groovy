@@ -43,7 +43,7 @@ class CreateProcedureLibraryTest extends Specification {
         task.destFile = "myPL.pl"
         task.encoding = "testEncoding"
         task.noCompress = false
-        task.basedir = "src"
+        task.baseDir = "src"
         task.excludes = "testexcludes"
         task.defaultExcludes = true
 
@@ -51,7 +51,7 @@ class CreateProcedureLibraryTest extends Specification {
         task.destFile == "myPL.pl"
         task.encoding == "testEncoding"
         task.noCompress == false
-        task.basedir == "src"
+        task.baseDir == "src"
         task.excludes == "testexcludes"
         task.defaultExcludes == true
     }
