@@ -34,6 +34,12 @@ abstract class BaseLatteSourceTask extends SourceTask {
     Boolean graphicalMode = ext.graphicalMode    
 
     /**
+    COMPILE statement allows underscores (-zn parameter)
+    */
+    @Input @Optional
+    Boolean compileUnderscore
+
+    /**
         get value of DlcHome
     */
     File getDlcHome() {

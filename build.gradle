@@ -1,4 +1,4 @@
-/* Copyright © 2019 Progress Software Corporation and/or its subsidiaries or affiliates. All Rights Reserved.
+/* Copyright © 2019,2020 Progress Software Corporation and/or its subsidiaries or affiliates. All Rights Reserved.
  * Build file for latte
  * A Gradle plugin for ABL based on PCT written in Groovy
  *
@@ -19,7 +19,7 @@ plugins {
     id "groovy"
 }
 
-version = "0.2.4"
+version = "0.2.5"
 group = 'oe.espresso'
 
 ext {
