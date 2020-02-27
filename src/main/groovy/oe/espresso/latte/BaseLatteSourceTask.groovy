@@ -1,5 +1,5 @@
 /**
-  Copyright © 2019 Progress Software Corporation and/or its subsidiaries or affiliates. All Rights Reserved.
+  Copyright © 2019,2020 Progress Software Corporation and/or its subsidiaries or affiliates. All Rights Reserved.
 */
 
 package oe.espresso.latte
@@ -25,6 +25,12 @@ abstract class BaseLatteSourceTask extends SourceTask {
     */
     @Input @Optional
     File dlcHome = ext.dlcHome
+
+    /**
+    COMPILE statement allows underscores (-zn parameter)
+    */
+    @Input @Optional
+    Boolean compileUnderscore
 
     /**
         get value of DlcHome
