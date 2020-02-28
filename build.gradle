@@ -43,6 +43,11 @@ dependencies {
     
 }
 
+// gradle doesn't like java 11 so always use java 8
+java {
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
 
 // Configure OpenClover coverage plugin
 // https://github.com/bmuschko/gradle-clover-plugin/blob/master/README.md
