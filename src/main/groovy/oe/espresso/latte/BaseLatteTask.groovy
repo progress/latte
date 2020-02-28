@@ -30,6 +30,13 @@ abstract class BaseLatteTask extends DefaultTask {
     File dlcHome = ext.dlcHome
 
     /**
+    use prowin32 or prowin (whichever is appropriate),
+    otherwise _progress
+    */
+    @Input @Optional
+    Boolean graphicalMode = ext.graphicalMode
+
+    /**
         get value of DlcHome
     */
     File getDlcHome() {
