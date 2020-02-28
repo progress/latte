@@ -27,6 +27,13 @@ abstract class BaseLatteSourceTask extends SourceTask {
     File dlcHome = ext.dlcHome
 
     /**
+    use prowin32 or prowin (whichever is appropriate),
+    otherwise _progress
+    */
+    @Input @Optional
+    Boolean graphicalMode = ext.graphicalMode    
+
+    /**
     COMPILE statement allows underscores (-zn parameter)
     */
     @Input @Optional

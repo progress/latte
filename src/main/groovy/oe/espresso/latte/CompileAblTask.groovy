@@ -78,6 +78,7 @@ class CompileAblTask extends BaseLatteSourceTask {
             args.put('dlcHome', dlcHome.path)
 
         args.put("destDir", destinationDir.path)
+        args.put("graphicalMode", graphicalMode)
         args.put("compileUnderscore", compileUnderscore)
 
         args.putAll(compileArgs)

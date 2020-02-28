@@ -1,3 +1,7 @@
+/**
+  Copyright © 2019,2020 Progress Software Corporation and/or its subsidiaries or affiliates. All Rights Reserved.
+*/
+
 package oe.espresso.latte
 
 import org.gradle.api.file.FileCollection
@@ -356,6 +360,7 @@ class RunAbl extends BaseLatteTask {
         args.put('debugReady', debugReady)
         args.put('tempDir', tempDir)
         args.put('quickRequest', quickRequest)
+        args.put("graphicalMode", graphicalMode)
 
         // Sort out all the nulls since we wanna leave the defaults to PCT
         def tmp = args.findAll { it.value != null }

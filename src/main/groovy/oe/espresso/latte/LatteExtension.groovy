@@ -54,6 +54,12 @@ class LatteExtension {
     Map environment = [:]
 
     /**
+    use prowin32 or prowin (whichever is appropriate) if true,
+    otherwise use _progress. (defaults to using _progress)
+    */
+    Boolean graphicalMode
+
+    /**
      * Stores private reference to project so {@code rcodeDir} can be
      * resolved dynamically when accessed.
      */
