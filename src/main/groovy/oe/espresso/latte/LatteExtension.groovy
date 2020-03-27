@@ -2,6 +2,9 @@ package oe.espresso.latte
 
 import org.gradle.api.Project
 import org.gradle.api.file.FileCollection
+import oe.espresso.latte.OpenEdgeVersion
+
+import org.slf4j.LoggerFactory
 
 /**
  * Global default latte plugin configuration.
@@ -9,6 +12,11 @@ import org.gradle.api.file.FileCollection
  * These settings are applied to relevant tasks created by latte.
  */
 class LatteExtension {
+
+    def logger = LoggerFactory.getLogger('latte')
+
+
+    
     /**
      * Name of the property on Project this instance should be bound to.
      */
@@ -59,6 +67,9 @@ class LatteExtension {
     */
     Boolean graphicalMode
 
+
+    OpenEdgeVersion version;
+
     /**
      * Stores private reference to project so {@code rcodeDir} can be
      * resolved dynamically when accessed.
@@ -97,6 +108,7 @@ class LatteExtension {
     */
     public void setDlcHome(File dlcHome) {
         this.dlcHome = dlcHome
+        version = null;
     }
 
     /**
@@ -170,4 +182,43 @@ class LatteExtension {
         }
     }
     
+    public OpenEdgeVersion getVersion() {
+        if (version == null) {
+            version = calculateVersion();
+        }
+
+        return version;
+    }
+
+    private OpenEdgeVersion calculateVersion() {
+
+
+        logger.debug("Fetching OpenEdge version from PCT")
+
+        project.ant.ProgressVersion(
+            dlcHome : this.dlcHome,
+            majorVersion : 'majorVersion',
+            fullVersion : 'fullVersion',
+            reducedVersion : 'reducedVersion',
+            minorVersion : 'minorVersion',
+            revision : 'revision',
+            patchLevel : 'patchLevel',
+            bitness : 'bitness',
+            rcodeVersion : 'rcodeVersion');
+
+        OpenEdgeVersion v = new OpenEdgeVersion()
+
+        v.major = project.ant.majorVersion
+        v.full = project.ant.fullVersion
+        v.minor = project.ant.minorVersion
+        v.revision = project.ant.revision
+        v.patchLevel = project.ant.patchLevel
+        v.bitness = project.ant.bitness
+        v.reduced = project.ant.reducedVersion
+        v.rcode = project.ant.rcodeVersion
+
+        logger.debug("Fetched version ($v.major)")
+
+        return v;
+    }
 }
