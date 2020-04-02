@@ -12,6 +12,7 @@ import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.SourceTask
 import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.Optional
 
 
 class CompileAblTask extends BaseLatteSourceTask {
@@ -30,6 +31,13 @@ class CompileAblTask extends BaseLatteSourceTask {
      */
     @Classpath
     FileCollection propath
+
+    /**
+        True to keep internal temporary files on disk.	
+    */
+    @Optional
+    @Input 
+    Boolean debugPCT = null
 
     /**
      * Databases ({@code refid}s) to connect to before compiling
@@ -80,6 +88,7 @@ class CompileAblTask extends BaseLatteSourceTask {
         args.put("destDir", destinationDir.path)
         args.put("graphicalMode", graphicalMode)
         args.put("compileUnderscore", compileUnderscore)
+        args.put('debugPCT', debugPCT)
 
         args.putAll(compileArgs)
 
