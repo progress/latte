@@ -1,9 +1,10 @@
 /**
-  Copyright © 2019 Progress Software Corporation and/or its subsidiaries or affiliates. All Rights Reserved.
+  Copyright © 2019-2020 Progress Software Corporation and/or its subsidiaries or affiliates. All Rights Reserved.
 */
 
 package oe.espresso.latte
 
+import java.io.File
 import org.gradle.api.AntBuilder
 import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
@@ -184,4 +185,80 @@ class AblUnitTaskTest extends Specification {
         task.includes.contains("**/*.cls")
     }    
 
+    def "ABLUnit called with coverage=true; default folder" () {
+        given: "an instance of AblUnit with sources set"
+        
+        File pCode = new File("src/test.p")
+        pCode.write('@Test.\n')
+        pCode.append('procedure test_one:\n')
+        pCode.append('define variable loop as integer.\n')
+        pCode.append('define variable tot as integer.\n')
+        pCode.append('do loop = 1 to 10:\n')
+        pCode.append('tot = tot + 1.\n')
+        pCode.append('end.\n')
+        pCode.append('end procedure.\n')
+
+        task.source('src')  
+        task.includes.contains("src/*.p")
+        task.propath = project.files('src')
+        
+        when: "coverage is set to true"
+        task.coverage = true
+        task.run()
+
+        then: "a profiler folder is created & files exist"
+        String outputDirPath = "$project.buildDir/profiler"
+        def profileFolder = new File(outputDirPath)
+        task.coverage
+        profileFolder
+        profileFolder.listFiles()
+    }
+
+    def "ABLUnit called with coverage=false; default folder" () {
+        given: "an instance of AblUnit with sources set"
+        
+        when: "coverage is set to false"
+        task.coverage = false
+        task.run()
+        
+        then: "a profiler folder is created that is empty"
+        String outputDirPath = "$project.buildDir/profiler"
+        def profileFolder = new File(outputDirPath)
+        !task.coverage
+        profileFolder
+        !profileFolder.listFiles()
+    }
+
+    def "ABLUnit called with coverage=true; specified folder" () {
+        given: "an instance of AblUnit with sources set"
+
+        when: "coverage is set to true"
+        task.coverage = true
+        String outputDirPath = "$project.buildDir/module/profiler"        
+        task.profilerOutputDir = new File(outputDirPath)
+        task.run()
+
+        then: "A profiler folder is created and files exist"
+        task.coverage
+        task.profilerOutputDir
+        task.profilerOutputDir.listFiles()
+    }
+
+    def "ABLUnit called with coverage=false; specified folder" () {
+        given: "an instance of AblUnit with sources set"
+        
+        when: "coverage is false"
+        task.coverage = false
+        
+        String outputDirPath = "$project.buildDir/module/profiler"
+        File profileFolder = new File(outputDirPath)
+        
+        task.profilerOutputDir = profileFolder
+        task.run()
+        
+        then: "the profiler folder is empty "
+        !task.coverage
+        task.profilerOutputDir
+        !task.profilerOutputDir.listFiles()
+    }
 }
