@@ -154,7 +154,7 @@ class AblUnitTaskTest extends Specification {
         given: "an instance of AblUnit with a procedure set"
 
         when: "a DB connection reference is added"
-        task.environment = ["bob" : "marley"]
+        task.environment = ["bob" : "marley"]   
         task.run()
 
         then: "a run option is specified "
@@ -183,65 +183,81 @@ class AblUnitTaskTest extends Specification {
         task.includes.contains("**/*.p")
         task.includes.contains("**/*.w")
         task.includes.contains("**/*.cls")
-    }    
+    }
 
     def "ABLUnit called with coverage=true; default folder" () {
         given: "an instance of AblUnit with sources set"
         
-        File pCode = new File("src/test.p")
-        pCode.write('@Test.\n')
-        pCode.append('procedure test_one:\n')
-        pCode.append('define variable loop as integer.\n')
-        pCode.append('define variable tot as integer.\n')
-        pCode.append('do loop = 1 to 10:\n')
-        pCode.append('tot = tot + 1.\n')
-        pCode.append('end.\n')
-        pCode.append('end procedure.\n')
+        String dirStr = new File("${project.buildDir}/profiler").getAbsolutePath()
 
-        task.source('src')  
-        task.includes.contains("src/*.p")
-        task.propath = project.files('src')
-        
         when: "coverage is set to true"
         task.coverage = true
         task.run()
 
-        then: "a profiler folder is created & files exist"
-        String outputDirPath = "$project.buildDir/profiler"
-        def profileFolder = new File(outputDirPath)
+        then: "profiler coverage is true and the default folder is used"
         task.coverage
-        profileFolder
-        profileFolder.listFiles()
-    }
-
-    def "ABLUnit called with coverage=false; default folder" () {
-        given: "an instance of AblUnit with sources set"
         
+        1 * ant.ABLUnit(_, _ as Closure) >> { Map params, Closure configClosure ->
+            // call configClosure the same way AntBuilder would do (delegating
+            // to self) so we can test the closure the compile() method passes
+            configClosure.delegate = ant
+            configClosure()
+            this
+        }
+
+        1 * ant.Profiler([
+                    enabled: true,
+                    description: "Coverage for ABLUnit: .test.unspecified",
+                    outputDir: dirStr,
+                    coverage : true
+                    ])
+    }
+    def "ABLUnit called with coverage=false; default folder" () {
+        given: "an instance of AblUnit with sources set"        
+
         when: "coverage is set to false"
         task.coverage = false
         task.run()
         
-        then: "a profiler folder is created that is empty"
-        String outputDirPath = "$project.buildDir/profiler"
-        def profileFolder = new File(outputDirPath)
-        !task.coverage
-        profileFolder
-        !profileFolder.listFiles()
+        then: "the profiler is not set"
+        1 * ant.ABLUnit(_, _ as Closure) >> { Map params, Closure configClosure ->
+            // call configClosure the same way AntBuilder would do (delegating
+            // to self) so we can test the closure the compile() method passes
+            configClosure.delegate = ant
+            configClosure()
+            this
+        }
+        
+        !task.profilerOutputDir
+
+        0 * ant.Profiler([_])
     }
 
     def "ABLUnit called with coverage=true; specified folder" () {
         given: "an instance of AblUnit with sources set"
+        File outDir = new File("$project.buildDir/module/profiler")
 
-        when: "coverage is set to true"
+        when: "coverage is set to true and a folder specified"
         task.coverage = true
-        String outputDirPath = "$project.buildDir/module/profiler"        
-        task.profilerOutputDir = new File(outputDirPath)
+        task.profilerOutputDir = outDir
         task.run()
 
-        then: "A profiler folder is created and files exist"
+        then: "the profiler coverage and output dir are set"
         task.coverage
-        task.profilerOutputDir
-        task.profilerOutputDir.listFiles()
+
+        1 * ant.ABLUnit(_, _ as Closure) >> { Map params, Closure configClosure ->
+            // call configClosure the same way AntBuilder would do (delegating
+            // to self) so we can test the closure the compile() method passes
+            configClosure.delegate = ant
+            configClosure()
+            this
+        }
+        1 * ant.Profiler([
+                    enabled: true,
+                    description: "Coverage for ABLUnit: .test.unspecified",
+                    outputDir: outDir.getAbsolutePath(),
+                    coverage : true
+                    ])
     }
 
     def "ABLUnit called with coverage=false; specified folder" () {
@@ -249,16 +265,22 @@ class AblUnitTaskTest extends Specification {
         
         when: "coverage is false"
         task.coverage = false
-        
-        String outputDirPath = "$project.buildDir/module/profiler"
-        File profileFolder = new File(outputDirPath)
-        
-        task.profilerOutputDir = profileFolder
+        task.profilerOutputDir = new File("$project.buildDir/module/profiler")
         task.run()
         
-        then: "the profiler folder is empty "
+        then: "the profiler coverage is false and output dir is not set null"
         !task.coverage
-        task.profilerOutputDir
-        !task.profilerOutputDir.listFiles()
+
+        1 * ant.ABLUnit(_, _ as Closure) >> { Map params, Closure configClosure ->
+            // call configClosure the same way AntBuilder would do (delegating
+            // to self) so we can test the closure the compile() method passes
+            configClosure.delegate = ant
+            configClosure()
+            this
+        }
+        
+        !task.profilerOutputDir
+
+        0 * ant.Profiler([_])
     }
 }

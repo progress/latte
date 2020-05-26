@@ -396,19 +396,19 @@ class AblUnit extends BaseLatteSourceTask {
             }
 
             this.source.addToAntBuilder(delegate, 'fileset', AntType.FileSet)
-
-            // Generate code coverage stats?
+            // Generate code coverage stats for tests?
             if (coverage) {
                 if (!profilerOutputDir) {
                     profilerOutputDir = new File(project.buildDir, "profiler")
                 }
-                def profArgs = [
-                        enabled     : true,
-                        description : "Coverage for ABLUnit: $project.group.$project.name.$project.version",
-                        outputDir   : profilerOutputDir.path,
-                        coverage    : true
-                        ]
-                ant.Profiler(profArgs)
+                ant.Profiler([enabled     : true,
+                              description : "Coverage for ABLUnit: $project.group.$project.name.$project.version",
+                              outputDir   : profilerOutputDir.getAbsolutePath(),
+                              coverage    : true
+                            ])
+            }
+            else {
+                profilerOutputDir = null
             }
         }
     }
