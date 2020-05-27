@@ -207,7 +207,7 @@ class AblUnitTaskTest extends Specification {
 
         1 * ant.Profiler([
                     enabled: true,
-                    description: "Coverage for ABLUnit: .test.unspecified",
+                    description: "Coverage for ABLUnit: test",
                     outputDir: dirStr,
                     coverage : true
                     ])
@@ -254,7 +254,7 @@ class AblUnitTaskTest extends Specification {
         }
         1 * ant.Profiler([
                     enabled: true,
-                    description: "Coverage for ABLUnit: .test.unspecified",
+                    description: "Coverage for ABLUnit: test",
                     outputDir: outDir.getAbsolutePath(),
                     coverage : true
                     ])

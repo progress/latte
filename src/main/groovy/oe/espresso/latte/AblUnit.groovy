@@ -401,8 +401,11 @@ class AblUnit extends BaseLatteSourceTask {
                 if (!profilerOutputDir) {
                     profilerOutputDir = new File(project.buildDir, "profiler")
                 }
+                // make sure the directory exists
+                project.fileTree(profilerOutputDir)
+
                 ant.Profiler([enabled     : true,
-                              description : "Coverage for ABLUnit: $project.group.$project.name.$project.version",
+                              description : "Coverage for ABLUnit: $project.name",
                               outputDir   : profilerOutputDir.getAbsolutePath(),
                               coverage    : true
                             ])
