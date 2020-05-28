@@ -248,6 +248,12 @@ class AblUnit extends BaseLatteSourceTask {
     @Input @Optional
     Map options = [:]
 
+    @Input @Optional
+    Boolean coverage = false
+
+    @Input @Optional
+    File profilerOutputDir = null
+
     AblUnit() {
         setDbConnections([] as Set)
         include("**/*.p")
@@ -308,7 +314,6 @@ class AblUnit extends BaseLatteSourceTask {
     public void env(String name, String value) {
         environment.put(name, value)
     }
-
 
     @TaskAction
     def run() {
@@ -390,10 +395,24 @@ class AblUnit extends BaseLatteSourceTask {
                 }
             }
 
-
             this.source.addToAntBuilder(delegate, 'fileset', AntType.FileSet)
-
+            // Generate code coverage stats for tests?
+            if (coverage) {
+                if (!profilerOutputDir) {
+                    profilerOutputDir = new File(project.buildDir, "profiler")
+                }
+                // make sure the directory exists
+                profilerOutputDir.mkdirs()
+                
+                ant.Profiler([enabled     : true,
+                              description : "Coverage for ABLUnit: $project.name",
+                              outputDir   : profilerOutputDir.getAbsolutePath(),
+                              coverage    : true
+                            ])
+            }
+            else {
+                profilerOutputDir = null
+            }
         }
     }
-
 }
