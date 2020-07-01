@@ -16,7 +16,7 @@ can use it by just adding this to your `build.gradle`:
 
 ```groovy
 plugins {
-  id "oe.espresso.latte.latte" version "0.2.5"
+  id "oe.espresso.latte" version "0.2.9"
 }
 ```
 
