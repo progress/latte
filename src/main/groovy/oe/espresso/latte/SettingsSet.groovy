@@ -26,7 +26,7 @@ class SettingsSet<E> implements Set<E> {
      * @param o element whose presence in this set is to be tested
      * @return true if this set contains the specified element
      */
-    boolean contains(Object o) {
+    boolean contains(E o) {
         this.settings.contains(o) || this.defaults.contains(o)
     }
 
@@ -36,7 +36,7 @@ class SettingsSet<E> implements Set<E> {
      * @param c collection to be checked for containment in this set
      * @return true if this set contains all of the elements of the specified collection
      */
-    boolean containsAll(Collection<?> c) {
+    boolean containsAll(Collection<E> c) {
         this.settings.containsAll(c) || this.defaults.containsAll(c)
     }
 
@@ -63,7 +63,24 @@ class SettingsSet<E> implements Set<E> {
      *
      * @return an array containing all the elements in this set
      */
-    Object[] toArray() {
+    E[] toArray() {
         this.defaults.toArray() + this.settings.toArray()
     }
+
+    /**
+        iterates over all the default settings,
+        and the current settings
+    */
+    Set<E> each(Closure closure) {
+        // because this is a set, we need to ensure
+        // we only iterate against unique values
+        // this is horribly inefficient, but we acknowledge that 
+        // because we expect to work with small sets
+        def all = this.settings + this.defaults
+        all.each(closure)
+        // have to return this so as not to mess up the return value
+        // with the new temp set we just created
+        return this
+    }
+    
 }
