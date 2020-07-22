@@ -72,10 +72,9 @@ class SettingsSet<E> implements Set<E> {
         and the current settings
     */
     Set<E> each(Closure closure) {
-        def all = []
-        all.addAll defaults
-        all.addAll settings
-        all.unique(false).each(closure);
+        // we use toArray for consistency...
+        // this won't eliminate duplicates...but that might be ok
+        def all = toArray().each(closure)
         // have to return this so as not to mess up the return value
         // with the new temp set we just created
         return this
