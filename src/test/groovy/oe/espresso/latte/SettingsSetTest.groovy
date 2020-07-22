@@ -82,4 +82,22 @@ class SettingsSetTest extends Specification {
         settings.size() == 3
         settings.toArray() == ['foo', 'bar', 'baz']
     }
+
+    def "each iterates the results from defaults and self"() {
+        given: "a SettingsSet with defaults and own elements"
+        def settings = new SettingsSet(['foo'] as Set)
+        def counted = 0
+        settings.addAll(['bar', 'baz'])
+
+        expect: "size is 3"
+        settings.size() == 3
+
+        when: "each item is counted"
+        settings.each { 
+            counted++
+        }
+
+        then: "the size and the iteration count to be the same"
+        counted == settings.size()
+    }    
 }

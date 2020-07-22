@@ -66,4 +66,19 @@ class SettingsSet<E> implements Set<E> {
     Object[] toArray() {
         this.defaults.toArray() + this.settings.toArray()
     }
+
+    /**
+        iterates over all the default settings,
+        and the current settings
+    */
+    Set<E> each(Closure closure) {
+        def all = []
+        all.addAll defaults
+        all.addAll settings
+        all.unique(false).each(closure);
+        // have to return this so as not to mess up the return value
+        // with the new temp set we just created
+        return this
+    }
+    
 }
