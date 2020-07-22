@@ -24,6 +24,26 @@ class SettingsSetTest extends Specification {
         e.message.contains('defaults cannot be null')
     }
 
+    /**
+     * If falling back to defaults is not needed might as well just use
+     * a plain Map.
+     */
+    def "uniqueness constraints are preseved with defaults"() {
+        given: "a set is created with a default containing a value"
+        def settings = new SettingsSet(['foo'] as Set)
+        def collected = []
+
+
+        when: "a duplicate entry is added to self, then iterate"
+        settings.add('foo')
+        settings.each {
+            collected << it
+        }
+
+        then: "only unique was iterated"
+        collected == ['foo']
+    }    
+
     def "it delegates read methods to defaults when not available on self"() {
         given: "a SettingsSet object with default element 'foo'"
         def settings = new SettingsSet(['foo'] as Set)
