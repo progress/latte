@@ -31,6 +31,7 @@ class LatteExtensionTest extends Specification {
         extension.propath?.files == project.files('src/main/abl').files
         extension.dbConnections?.isEmpty()
         extension.pctTaskArgs == [:]
+        extension.graphicalMode == false
 
         when: "project buildDir is changed"
         project.buildDir = project.file('newBuildDir')

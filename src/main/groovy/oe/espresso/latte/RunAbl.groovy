@@ -33,12 +33,6 @@ class RunAbl extends BaseLatteTask {
     String procedure
 
     /**
-        True if you want to execute procedure using prowin32 (or prowin on 64 bits platforms), _progres otherwise.	
-    */
-    @Input @Optional
-    Boolean graphicalMode = null
-
-    /**
         The directory in which the OpenEdge runtime should be executed. File attributes (such as paramFile or iniFile) are still resolved against the project base directory.	
     */
     @Input @Optional
@@ -360,7 +354,6 @@ class RunAbl extends BaseLatteTask {
         args.put('debugReady', debugReady)
         args.put('tempDir', tempDir)
         args.put('quickRequest', quickRequest)
-        args.put("graphicalMode", graphicalMode)
 
         // Sort out all the nulls since we wanna leave the defaults to PCT
         def tmp = args.findAll { it.value != null }
