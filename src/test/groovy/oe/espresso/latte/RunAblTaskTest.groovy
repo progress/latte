@@ -50,11 +50,13 @@ class RunAblTaskTest extends Specification {
         extension.propath = project.files('src')
         extension.dbConnections('foodb')
         extension.environment.put("bob", "mary")
+        extension.graphicalMode = true
 
         then: "task properties change too"
         task.propath == extension.propath
         task.dbConnections.contains('foodb')
         task.environment.containsKey("bob")
+        task.graphicalMode == extension.graphicalMode
     }    
 
     def "task properties can be changed without affecting extension properties"() {
@@ -65,11 +67,13 @@ class RunAblTaskTest extends Specification {
         task.propath = project.files('src')
         task.dbConnections << 'foodb'
         task.environment.put("bob", "mary")
+        task.graphicalMode = true
 
         then: "extension properties are not affected"
         extension.propath.files == defExtension.propath.files
         extension.dbConnections == defExtension.dbConnections
         extension.environment == defExtension.environment
+        extension.graphicalMode defExtension.graphicalMode
     }    
 
     def "property values on task take precedence over extension"() {
@@ -109,7 +113,8 @@ class RunAblTaskTest extends Specification {
         then: "PCTCompile is passed the extra args"
         1 * ant.PCTRun(
             [dlcHome : extension.dlcHome.path,
-            procedure: task.procedure],
+            procedure: task.procedure,
+            graphicalMode : false],
             _ as Closure
         )
     }   
@@ -125,7 +130,8 @@ class RunAblTaskTest extends Specification {
         then: "PCTCompile is passed the extra args"
         1 * ant.PCTRun(
             [dlcHome: 'testdlchome',
-            procedure: task.procedure],
+            procedure: task.procedure,
+            graphicalMode : false],
             _ as Closure
         )
     }     
@@ -143,7 +149,8 @@ class RunAblTaskTest extends Specification {
         // param (closure) processing closure
         1 * ant.PCTRun(
             [dlcHome : extension.dlcHome.path,
-            procedure: task.procedure],
+            procedure: task.procedure,
+            graphicalMode : false],
             _ as Closure
         ) >> { Map params, Closure configClosure ->
             println "PCTRun(${params}) &${configClosure.class}"
@@ -169,7 +176,8 @@ class RunAblTaskTest extends Specification {
         // param (closure) processing closure
         1 * ant.PCTRun(
             [dlcHome : extension.dlcHome.path,
-            procedure: task.procedure],
+            procedure: task.procedure,
+            graphicalMode : false],
             _ as Closure
         ) >> { Map params, Closure configClosure ->
             println "PCTRun(${params}) &${configClosure.class}"
@@ -195,7 +203,8 @@ class RunAblTaskTest extends Specification {
         // param (closure) processing closure
         1 * ant.PCTRun(
             [dlcHome : extension.dlcHome.path,
-            procedure: task.procedure],
+            procedure: task.procedure,
+            graphicalMode : false],
             _ as Closure
         ) >> { Map params, Closure configClosure ->
             println "PCTRun(${params}) &${configClosure.class}"

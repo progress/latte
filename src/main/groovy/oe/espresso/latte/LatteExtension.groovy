@@ -63,9 +63,9 @@ class LatteExtension {
 
     /**
     use prowin32 or prowin (whichever is appropriate) if true,
-    otherwise use _progress. (defaults to using _progress)
+    otherwise use _progress. defaults to false indicating use of  _progress
     */
-    Boolean graphicalMode
+    Boolean graphicalMode = false
 
 
     OpenEdgeVersion version;

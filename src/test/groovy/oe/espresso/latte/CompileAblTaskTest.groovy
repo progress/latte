@@ -137,7 +137,8 @@ class CompileAblTaskTest extends Specification {
         // define all expected interactions here so we don't have to repeat the
         // param (closure) processing closure
         3 * ant.PCTCompile(
-            [destDir: task.destinationDir.path],
+            [destDir: task.destinationDir.path,
+            graphicalMode:false],
             _ as Closure
         ) >> { Map params, Closure configClosure ->
             println "PCTCompile(${params}) &${configClosure.class}"
@@ -195,7 +196,10 @@ class CompileAblTaskTest extends Specification {
 
         then: "PCTCompile is passed the extra args"
         1 * ant.PCTCompile(
-            [destDir: task.destinationDir.path, listing: true, preprocess: true],
+            [destDir: task.destinationDir.path, 
+            listing: true, 
+            preprocess: true,
+            graphicalMode:false],
             _ as Closure
         )
     }
@@ -286,7 +290,8 @@ class CompileAblTaskTest extends Specification {
         then: "PCTCompile is passed custom dlcHome"
         1 * ant.PCTCompile(
             [dlcHome: task.dlcHome.path,
-            destDir: task.destinationDir.path],
+            destDir: task.destinationDir.path,
+            graphicalMode:false],
             _ as Closure
         )
     }   

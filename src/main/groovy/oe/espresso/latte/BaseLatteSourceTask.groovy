@@ -27,11 +27,11 @@ abstract class BaseLatteSourceTask extends SourceTask {
     File dlcHome = ext.dlcHome
 
     /**
-    use prowin32 or prowin (whichever is appropriate),
-    otherwise _progress
+    If true use prowin. If false use _progress.
+    if not set, defaults to abl.graphicalMode
     */
     @Input @Optional
-    Boolean graphicalMode = ext.graphicalMode    
+    Boolean graphicalMode
 
     /**
     COMPILE statement allows underscores (-zn parameter)
@@ -51,4 +51,16 @@ abstract class BaseLatteSourceTask extends SourceTask {
         return project.extensions.getByType(LatteExtension)
     }
 
+    /**
+       Use prowin if set to true. Use _progress if set
+       to false. If not explicitly set, defaults to the value
+       of abl.graphicalMode.
+
+    */
+    Boolean getGraphicalMode() {
+        if (graphicalMode == null) {
+            return ext.graphicalMode
+        }
+        return graphicalMode.value
+    }
 }
